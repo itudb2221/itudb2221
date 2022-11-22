@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    </head>
+    <body>
+        <header>
+            <ul class="nav">
+                <li><a href="{{ url_for('home_page') }}">Home</a> </li>
+                <li><a href="{{ url_for('drivers_page') }}">Drivers</a> </li>
+                <li><a href="{{ url_for('seasons_page') }}">Seasons</a> </li>
+            </ul>
+        </header>
+        {%block content%}{%endblock%}
+        <footer>
+
+        </footer>
+    </body>
+</html>
