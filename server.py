@@ -8,6 +8,7 @@ def create_app():
     app.add_url_rule('/', view_func=views.home_page)
     app.add_url_rule('/drivers', view_func=views.drivers_page)
     app.add_url_rule('/seasons', view_func=views.seasons_page)
+    app.add_url_rule('/driver_stangings', view_func=views.driver_standings_page)
     return app
 
 app = create_app()
