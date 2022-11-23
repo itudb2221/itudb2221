@@ -1,0 +1,2 @@
+09.11.2022: Created initial python files, created an initial layout for html documents and organized overall structured.
+22.11.2022: Added database models, wrote SQL code to create first few tables.
