@@ -8,3 +8,6 @@ def drivers_page():
 
 def seasons_page():
     return render_template("seasons.html")
+
+def driver_standings_page():
+    return render_template("driver_standings.html")
