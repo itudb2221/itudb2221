@@ -1,0 +1,26 @@
+CREATE TABLE DRIVERS (
+    driverId INTEGER PRIMARY KEY AUTOINCREMENT,
+    driverRef VARCHAR(50) NOT NULL,
+    driverNumber INTEGER,
+    code VARCHAR(3),
+    forename VARCHAR(50) NOT NULL,
+    surname VARCHAR(50) NOT NULL,
+    dob VARCHAR(50),
+    nationality VARCHAR(50)
+    driverUrl VARCHAR(200)
+)
+
+CREATE TABLE SEASONS (
+    year VARCHAR(4) PRIMARY KEY,
+    seasonUrl VARCHAR(200)
+)
+
+CREATE TABLE DRIVER_STANDINGS (
+    driverStandingsId INTEGER PRIMARY KEY AUTOINCREMENT,
+    FOREIGN KEY raceId REFERENCES RACES (raceId)
+    FOREIGN KEY driverId REFERENCES DRIVERS (driverId)
+    points INTEGER,
+    position INTEGER,
+    positionText VARCHAR(4),
+    wins INTEGER
+)
