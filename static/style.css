@@ -1,10 +1,9 @@
-body {
+/* body {
     font-family: Helvetica, sans-serif;
     background-color: #cccccc
 }
 
 
-/* HEADER START */
 header {
     background-color: #333333;
 }
@@ -33,6 +32,5 @@ header {
 
 .nav li a:hover {
     background-color: #aa3333;
-}
+} */
 
-/* HEADER END */
