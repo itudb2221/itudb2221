@@ -100,3 +100,7 @@ class Database:
             )
             connection.commit()
 # ============== Driver Standings End =============== #
+
+# ============== RACES START ============== #
+# Add AUTOINCREMENT property manually.
+# ============== RACES END ============== #
