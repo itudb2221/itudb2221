@@ -1,0 +1,140 @@
+DROP TABLE CIRCUITS IF EXISTS;
+DROP TABLE CONSTRUCTOR_RESULTS IF EXISTS;
+DROP TABLE CONSTRUCTOR_STANDINGS IF EXISTS;
+DROP TABLE CONSTRUCTORS IF EXISTS;
+DROP TABLE DRIVER_STANDINGS IF EXISTS;
+DROP TABLE DRIVERS IF EXISTS;
+DROP TABLE LAP_TIMES IF EXISTS;
+DROP TABLE PIT_STOPS IF EXISTS;
+DROP TABLE QUALIFYING IF EXISTS;
+DROP TABLE RACES IF EXISTS;
+DROP TABLE RESULTS IF EXISTS;
+DROP TABLE SEASONS IF EXISTS;
+DROP TABLE SPRINT_RESULTS IF EXISTS;
+DROP TABLE STATUS_T IF EXISTS;
+
+CREATE TABLE DRIVERS (
+    driverId INTEGER PRIMARY KEY AUTOINCREMENT,
+    driverRef VARCHAR(50) NOT NULL,
+    driverNumber INTEGER,
+    code VARCHAR(3),
+    forename VARCHAR(255) NOT NULL,
+    surname VARCHAR(255) NOT NULL,
+    dob DATE,
+    nationality VARCHAR(50),
+    driverUrl VARCHAR(255)
+)
+
+CREATE TABLE CONSTRUCTORS (
+    constructorId INTEGER PRIMARY KEY AUTOINCREMENT
+    constructorRef VARCHAR(50),
+    constructorName VARCHAR(255),
+    nationality VARCHAR(50),
+    constructorUrl VARCHAR(255)
+)
+
+CREATE TABLE CIRCUITS (
+    circuitId INTEGER PRIMARY KEY AUTOINCREMENT,
+    circuitRef VARCHAR(50),
+    circuitName VARCHAR(255),
+    circutiLocation VARCHAR(50),
+    country VARCHAR(50),
+    lat FLOAT,
+    lng FLOAT
+    alt INTEGER,
+    circuitUrl VARCHAR(255)
+)
+
+CREATE TABLE SEASONS (
+    year INTEGER PRIMARY KEY,
+    seasonUrl VARCHAR(255)
+)
+
+CREATE TABLE RACES (
+    raceId INTEGER PRIMARY KEY AUTOINCREMENT,
+    raceYear INTEGER REFERENCES SEASONS (year) ON DELETE CASCASE,
+    raceRound INTEGER,
+    circutId INTEGER REFERENCES CIRCUITS (circuitId) ON DELETE CASCADE,
+    raceName VARCHAR(255),
+    raceDate DATE,
+    raceTime TIME,
+    raceUrl VARCHAR(50),
+    fp1_date DATE,
+    fp1_time TIME,
+    fp2_date DATE,
+    fp2_time TIME,
+    fp3_date DATE,
+    fp3_time TIME,
+    quali_date DATE,
+    quali_time TIME,
+    sprint_date DATE,
+    sprint_time TIME,
+)
+
+CREATE TABLE STATUS_T (
+    statusId INTEGER PRIMARY KEY AUTOINCREMENT,
+    statusDef VARCHAR (255)
+)
+
+-- QUALIFYING HERE
+
+-- SPRINT_RESULTS HERE
+
+CREATE TABLE RESULTS (
+    resultId INTEGER PRIMARY KEY AUTOINCREMENT,
+    raceId INTEGER REFERENCES RACES (raceId),
+    driverId INTEGER REFERENCES DRIVERS (driverId),
+    constructorId INTEGER REFERENCES CONSTRUCTORS (constructorId),raceNumber INTEGER,
+    grid INTEGER,
+    position INTEGER,
+    positionText VARCHAR (2),
+    positionOrder INTEGER,
+    points FLOAT,
+    laps INTEGER,
+    resultTime VARCHAR (31),
+    milliseconds INTEGER,
+    fastestLap INTEGER,
+    resultRank INTEGER,
+    fastestLapTime VARCHAR(31),
+    fastestLapSpeed VARCHAR(31),
+    statusId INTEGER REFERENCES STATUS_T (statusId)
+)
+
+-- PIT_STOPS HERE
+
+CREATE TABLE LAP_TIMES (
+    raceId INTEGER PRIMARY KEY REFERENCES RACES (raceId),
+    driverId INTEGER PRIMARY KEY REFERENCES DRIVERS (driverId),
+    lap INTEGER PRIMARY KEY,
+    position INTEGER,
+    lapTime VARCHAR(8),
+    milliseconds INTEGER
+)
+
+CREATE TABLE DRIVER_STANDINGS (
+    driverStandingsId INTEGER PRIMARY KEY AUTOINCREMENT,
+    raceId INTEGER REFERENCES RACES (raceId) ON DELETE CASCADE,
+    driverId INTEGER REFERENCES DRIVERS (driverId) ON DELETE CASCADE,
+    points FLOAT,
+    position INTEGER,
+    positionText VARCHAR(255),
+    wins INTEGER
+)
+
+CREATE TABLE CONSTRUCTOR_STANDINGS (
+    constructorStandingsId INTEGER PRIMARY KEY AUTOINCREMENT,
+    raceId INTEGER REFERENCES RACES (raceId) ON DELETE CASCADE,
+    constructorId INTEGER REFERENCES (constructorId),
+    points FLOAT,
+    position INTEGER,
+    positionText VARCHAR(2),
+    wins INTEGER
+)
+
+CREATE TABLE CONTRUCTOR_RESULTS (
+    constructorResultsId INTEGER PRIMARY KEY AUTOINCREMENT,
+    raceId INTEGER REFERENCES RACES (raceId) ON DELETE CASCADE,
+    constructorId INTEGER REFERENCES (constructorId),
+    points FLOAT,
+    constructorStatus VARCHAR(31)
+)
