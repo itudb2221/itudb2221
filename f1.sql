@@ -22,10 +22,10 @@ CREATE TABLE IF NOT EXISTS CIRCUITS (
     circuitId INTEGER PRIMARY KEY AUTOINCREMENT,
     circuitRef VARCHAR(50),
     circuitName VARCHAR(255),
-    circutiLocation VARCHAR(50),
+    circutitLocation VARCHAR(50),
     country VARCHAR(50),
     lat FLOAT,
-    lng FLOAT
+    lng FLOAT,
     alt INTEGER,
     circuitUrl VARCHAR(255)
 );
