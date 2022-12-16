@@ -14,7 +14,7 @@ def create_app():
 
 app = create_app()
 
-db = Database("test.db")
+db = Database("database.db")
 app.config["db"] = db
 
 port = app.config.get("PORT", 5000)
