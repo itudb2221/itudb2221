@@ -102,6 +102,7 @@ class Database:
 # ============== Driver Standings End =============== #
 
 # ============== RACES START ============== #
+
     def addRaces(self, races: Races):
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
@@ -179,3 +180,4 @@ class Database:
             )
             connection.commit()
 # ============== CONSTRUCTORS END ============== #
+
