@@ -48,13 +48,13 @@ class Database:
             query = "UPDATE DRIVERS SET "
             for i in range(len(attrNames)):
                 query += (f" {attrNames[i]} = {attrValues[i]},")
-            query = query[:-1] + "WHERE driverId = %s"
+            query = query[:-1] + "WHERE driverId = ?"
             cursor.execute(query, (driverId,))
 
     def remove_driver(self, driverId): # Delete
         with (sqlite.connect(self.dbfile)) as connection:
             cursor = connection.cursor()
-            query = "DELETE FROM DRIVERS WHERE (driverId = %s)"
+            query = "DELETE FROM DRIVERS WHERE (driverId = ?)"
             cursor.execute(query, (driverId,))
             connection.commit()
 
@@ -100,13 +100,13 @@ class Database:
             query = "UPDATE CONSTRUCTORS SET "
             for i in range(len(attrNames)):
                 query += (f" {attrNames[i]} = {attrValues[i]},")
-            query = query[:-1] + "WHERE constructorId = %s"
+            query = query[:-1] + "WHERE constructorId = ?"
             cursor.execute(query, (constructorId,))
 
     def remove_constructor(self, constructorId): # Delete
         with (sqlite.connect(self.dbfile)) as connection:
             cursor = connection.cursor()
-            query = "DELETE FROM CONSTRUCTORS WHERE (constructorId = %s)"
+            query = "DELETE FROM CONSTRUCTORS WHERE (constructorId = ?)"
             cursor.execute(query, (constructorId,))
             connection.commit()
 # ============== Constructors End ============== #
@@ -155,13 +155,13 @@ class Database:
             query = "UPDATE CIRCUITS SET "
             for i in range(len(attrNames)):
                 query += (f" {attrNames[i]} = {attrValues[i]},")
-            query = query[:-1] + "WHERE circuitId = %s"
+            query = query[:-1] + "WHERE circuitId = ?"
             cursor.execute(query, (circuitId,))
 
     def remove_circuit(self, circuitId): # Delete
         with (sqlite.connect(self.dbfile)) as connection:
             cursor = connection.cursor()
-            query = "DELETE FROM CIRCUITS WHERE (circuitId = %s)"
+            query = "DELETE FROM CIRCUITS WHERE (circuitId = ?)"
             cursor.execute(query, (circuitId,))
             connection.commit()
 # ============== Circuits End ============== #
@@ -205,13 +205,13 @@ class Database:
             query = "UPDATE SEASONS SET "
             for i in range(len(attrNames)):
                 query += (f" {attrNames[i]} = {attrValues[i]},")
-            query = query[:-1] + "WHERE seasonYear = %s"
+            query = query[:-1] + "WHERE seasonYear = ?"
             cursor.execute(query, (seasonYear,))
 
     def remove_season(self, seasonYear): # Delete
         with (sqlite.connect(self.dbfile)) as connection:
             cursor = connection.cursor()
-            query = "DELETE FROM SEASONS WHERE (seasonYear = %s)"
+            query = "DELETE FROM SEASONS WHERE (seasonYear = ?)"
             cursor.execute(query, (seasonYear,))
             connection.commit()
 # ============== Seasons End =============== #
@@ -245,9 +245,15 @@ class Database:
             cursor2 = connection.cursor()
             for driverStandingsId, raceId, driverId, points, position, positionText, wins in cursor:
                 cursor2.execute("SELECT raceYear, raceName from RACES WHERE (raceId = ?)", (raceId,))
-                raceYear, raceName = cursor2.fetchone()
+                values = cursor2.fetchone()
+                if not values:
+                    continue
+                raceYear, raceName = values
                 cursor2.execute("SELECT forename, surname FROM DRIVERS WHERE (driverId = ?)", (driverId,))
-                forename, surname = cursor2.fetchone()
+                values = cursor2.fetchone()
+                if not values:
+                    continue
+                forename, surname = values
                 driver_standings.append(DriverStanding(driverStandingsId, [raceId, f"{raceYear} {raceName}"], [driverId, f"{forename} {surname}"], points, position, positionText, wins))
         return driver_standings
 
@@ -307,13 +313,13 @@ class Database:
             query = "UPDATE RACES SET "
             for i in range(len(attrNames)):
                 query += (f" {attrNames[i]} = {attrValues[i]},")
-            query = query[:-1] + "WHERE raceId = %s"
+            query = query[:-1] + "WHERE raceId = ?"
             cursor.execute(query, (raceId,))
 
     def remove_race(self, raceId): # Delete
         with (sqlite.connect(self.dbfile)) as connection:
             cursor = connection.cursor()
-            query = "DELETE FROM RACES WHERE (raceId = %s)"
+            query = "DELETE FROM RACES WHERE (raceId = ?)"
             cursor.execute(query, (raceId,))
             connection.commit()
 # ============== RACES END ============== #
