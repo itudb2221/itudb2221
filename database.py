@@ -272,11 +272,10 @@ class Database:
      def addSprintResults(self, spRes: sprintResults):
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO SPRINT_RESULTS (sprintResultId, raceId, driverId, constructorId, sp_number,grid,position,positionText,positionOrder,points,laps,sp_time,milliseconds,fastestLap,fastestLapTime,statusId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            query = "INSERT INTO SPRINT_RESULTS (raceId, driverId, constructorId, sp_number,grid,position,positionText,positionOrder,points,laps,sp_time,milliseconds,fastestLap,fastestLapTime,statusId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             cursor.execute(
                 query,
                 (
-                    spRes.resultId,
                     spRes.raceId,
                     spRes.driverId,
                     spRes.constructorId,
@@ -294,6 +293,40 @@ class Database:
                     spRes.statusId
                 )
             )
+            connection.commit()
+
+     def getSprintResults(self): 
+        sprint_results = list()
+        with(sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM SPRINT_RESULTS" 
+            cursor.execute(query)
+            connection.commit()
+            for sprintResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId in cursor:
+                sprint_results.append(sprintResults(printResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
+        return sprint_results
+
+     def updateSprintResults(self, sprintResultId, attrNames, attrValues):
+        if "sprintResultId" in attrNames:
+            print("Primary key cannot be updated.") 
+            return
+        if (len(attrNames) != len(attrValues)) or not len(attrNames):
+            print("Invalid input. ") 
+            return
+        
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE SPRINT_RESULTS SET "
+            for i in range(len(attrNames)):
+                query += (f" {attrNames[i]} = {attrValues[i]},")
+            query = query[:-1] + "WHERE sprintResultId = %s"
+            cursor.execute(query, sprintResultId)
+
+    def removeSprintResults(self, sprintResultId): 
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM SPRINT_RESULTS WHERE (sprintResultId = %s)"
+            cursor.execute(query, sprintResultId)
             connection.commit()
 # ============== Sprint Results END ============== #
 
