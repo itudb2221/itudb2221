@@ -138,11 +138,10 @@ class Database:
      def addSprintResults(self, spRes: sprintResults):
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO SPRINT_RESULTS (sprintResultId, raceId, driverId, constructorId, sp_number,grid,position,positionText,positionOrder,points,laps,sp_time,milliseconds,fastestLap,fastestLapTime,statusId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            query = "INSERT INTO SPRINT_RESULTS (raceId, driverId, constructorId, sp_number,grid,position,positionText,positionOrder,points,laps,sp_time,milliseconds,fastestLap,fastestLapTime,statusId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             cursor.execute(
                 query,
                 (
-                    spRes.resultId,
                     spRes.raceId,
                     spRes.driverId,
                     spRes.constructorId,
