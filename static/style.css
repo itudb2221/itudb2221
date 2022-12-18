@@ -1,10 +1,4 @@
-body {
-    font-family: Helvetica, sans-serif;
-    background-color: #cccccc
-}
-
-
-/* HEADER START */
+/*
 header {
     background-color: #333333;
 }
@@ -33,6 +27,12 @@ header {
 
 .nav li a:hover {
     background-color: #aa3333;
+} */
+
+body {
+    background-color: #323539;
 }
 
-/* HEADER END */
+.nav-item:hover {
+    background-color: #323539;
+}
