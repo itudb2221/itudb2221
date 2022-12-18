@@ -18,10 +18,22 @@ class Constructor:
         self.nationality        = nationality
         self.constructorUrl     = constructorUrl
 
+class Circuit:
+    def __init__(self, circuitId, circuitRef, circuitName, circutitLocation, country, lat, lng, alt, circuitUrl) -> None:
+        self.circuitId          = circuitId
+        self.circuitRef         = circuitRef
+        self.circuitName        = circuitName
+        self.circutitLocation   = circutitLocation
+        self.country            = country
+        self.lat                = lat
+        self.lng                = lng
+        self.alt                = alt
+        self.circuitUrl         = circuitUrl
+
 class Season:
-    def __init__(self, year, url):
-        self.year = year
-        self.url  = url
+    def __init__(self, seasonYear, seasonUrl):
+        self.seasonYear = seasonYear
+        self.seasonUrl  = seasonUrl
 
 class DriverStanding:
     def __init__(self, driverStandingsId, raceId, driverId, points, position, positionText, wins):
