@@ -14,7 +14,9 @@ def seasons_page():
     return render_template("seasons.html")
 
 def driver_standings_page():
-    return render_template("driver_standings.html")
+    db = current_app.config["db"]
+    driver_standings = db.get_driver_standings()
+    return render_template("driver_standings.html", driver_standings=driver_standings)
 
 def edit_tables_page():
     return render_template("edit_tables.html")
