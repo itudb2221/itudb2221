@@ -101,38 +101,6 @@ class Database:
             connection.commit()
 # ============== Driver Standings End =============== #
 
-# ============== RACES START ============== #
-
-    def addRaces(self, races: Races):
-        with sqlite.connect(self.dbfile) as connection:
-            cursor = connection.cursor()
-            query = "INSERT INTO RACES (raceId, raceYear, raceRound, circuitId, raceName, raceDate, raceTime, raceUrl, fp1_date, fp1_time, fp2_date, fp2_time, fp3_date, fp3_time, quali_date, quali_time, sprint_date, sprint_time ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-            cursor.execute(
-                query,
-                (
-                    races.raceId,
-                    races.year,
-                    races.round,
-                    races.circuitId,
-                    races.name,
-                    races.date,
-                    races.time,
-                    races.url,
-                    races.fp1_date,
-                    races.fp1_time,
-                    races.fp2_date,
-                    races.fp2_time,
-                    races.fp3_date,
-                    races.fp3_time,
-                    races.quali_date,
-                    races.quali_time,
-                    races.sprint_date,
-                    races.sprint_time
-                )
-            )
-            connection.commit()
-# Add AUTOINCREMENT property manually.
-# ============== RACES END ============== #
 
 # ============== Sprint Results START ============== #
      def addSprintResults(self, spRes: sprintResults):
@@ -195,22 +163,3 @@ class Database:
             cursor.execute(query, sprintResultId)
             connection.commit()
 # ============== Sprint Results END ============== #
-
-# ============== CONSTRUCTORS START ============== #
-    def addConstructors(self, cst: Constructors):
-        with sqlite.connect(self.dbfile) as connection:
-            cursor = connection.cursor()
-            query = "INSERT INTO CONSTRUCTORS (constructorId, constructorRef, constructorName, nationality, constructorUrl) VALUES (?, ?, ?, ?, ?)"
-            cursor.execute(
-                query,
-                (
-                    cst.constructorId,
-                    cst.constructorRef,
-                    cst.name,
-                    cst.nationality,
-                    cst.url
-                )
-            )
-            connection.commit()
-# ============== CONSTRUCTORS END ============== #
-
