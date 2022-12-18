@@ -103,7 +103,7 @@ class Database:
 
 
 # ============== Sprint Results START ============== #
-     def addSprintResults(self, spRes: sprintResults):
+     def addSprintResults(self, spRes: SprintResults):
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
             query = "INSERT INTO SPRINT_RESULTS (raceId, driverId, constructorId, sp_number,grid,position,positionText,positionOrder,points,laps,sp_time,milliseconds,fastestLap,fastestLapTime,statusId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
@@ -137,7 +137,7 @@ class Database:
             cursor.execute(query)
             connection.commit()
             for sprintResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId in cursor:
-                sprint_results.append(sprintResults(printResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
+                sprint_results.append(SprintResults(printResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
         return sprint_results
 
      def updateSprintResults(self, sprintResultId, attrNames, attrValues):
