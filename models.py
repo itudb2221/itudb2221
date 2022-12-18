@@ -1,14 +1,22 @@
 class Driver:
-    def __init__(self, driverId, driverRef, number, code, forename, surname, dob, nationality, url):
+    def __init__(self, driverId, driverRef, driverNumber, code, forename, surname, dob, nationality, driverUrl) -> None:
         self.driverId       = driverId
         self.driverRef      = driverRef
-        self.number         = number
+        self.driverNumber   = driverNumber
         self.code           = code
         self.forename       = forename
         self.surname        = surname
         self.dob            = dob
         self.nationality    = nationality
-        self.url            = url
+        self.driverUrl      = driverUrl
+
+class Constructor:
+    def __init__(self, constructorId, constructorRef, constructorName, nationality, constructorUrl) -> None:
+        self.constructorId      = constructorId
+        self.constructorRef     = constructorRef
+        self.constructorName    = constructorName
+        self.nationality        = nationality
+        self.constructorUrl     = constructorUrl
 
 class Season:
     def __init__(self, year, url):
