@@ -265,7 +265,6 @@ def add_race_page():
         finally:
             return redirect(url_for("races_page"))
 
-<<<<<<< HEAD
 def pit_stops():
     db = current_app.config["db"]
     pit_stops = db.getPitStops()
@@ -288,7 +287,6 @@ def delete_pit_stop(identifier):
 
     return pit_stops()
 
-@app.route("/pit_stops/update/<identifier>", methods=["GET", "POST"])
 def update_pit_stop(identifier):
     db = current_app.config["db"]
     
@@ -304,7 +302,6 @@ def update_pit_stop(identifier):
         pitstop = db.getPitStopByRaceIdAndDriverIdAndTime(raceId, driverId, time)
 
         return render_template("update_pitstop.html", pitstop=pitstop)
-=======
 # ============ LAP TIMES ============ #
 
 def lap_times_page():
@@ -357,4 +354,3 @@ def add_lap_time_page():
             print(traceback.format_exc())
         finally:
             return redirect(url_for("lap_times_page"))
->>>>>>> origin/main
