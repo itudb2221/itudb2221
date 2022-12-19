@@ -352,6 +352,7 @@ class Database:
             connection.commit()
 # ============== RACES END ============== #
 
+
 # ============== QUALIFYING START ============== #
     def add_qualifying(self, qualifying: Qualifying): # Create
         with sqlite.connect(self.dbfile) as connection:
@@ -409,7 +410,9 @@ class Database:
 # ============== QUALIFYING END ============== #
 
 # ============== Sprint Results START ============== #
-    def addSprintResults(self, spRes: sprintResults):
+
+    def addSprintResults(self, spRes: SprintResults):
+
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
             query = "INSERT INTO SPRINT_RESULTS (raceId, driverId, constructorId, sp_number,grid,position,positionText,positionOrder,points,laps,sp_time,milliseconds,fastestLap,fastestLapTime,statusId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
@@ -419,14 +422,14 @@ class Database:
                     spRes.raceId,
                     spRes.driverId,
                     spRes.constructorId,
-                    spRes.number,
+                    spRes.sp_number,
                     spRes.grid,
                     spRes.position,
                     spRes.positionText,
                     spRes.positionOrder,
                     spRes.points,
                     spRes.laps,
-                    spRes.time,
+                    spRes.sp_time,
                     spRes.milliseconds,
                     spRes.fastestLap,
                     spRes.fastestLapTime,
@@ -443,7 +446,7 @@ class Database:
             cursor.execute(query)
             connection.commit()
             for sprintResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId in cursor:
-                sprint_results.append(sprintResults(printResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
+                sprint_results.append(SprintResults(printResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
         return sprint_results
 
     def updateSprintResults(self, sprintResultId, attrNames, attrValues):
