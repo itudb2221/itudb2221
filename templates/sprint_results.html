@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} Drivers {%endblock%}
+{% block title %} Sprint Results {%endblock%}
 {%block content%}
 <div class="container-fluid mt-3 bg-dark">
     <p class="display-5 text-white">Sprint Results</p>
@@ -9,6 +9,12 @@
                 <th>
                     <div class="control">
                         <button class="btn btn-primary">Delete</button>
+                    </div>
+                    <div class="control">
+                        <a href="{{ url_for('update_spRes') }}">Update</a>
+                    </div>
+                    <div class="control">
+                        <a  href="{{ url_for('add_spRes') }}">Add a Sprint Result</a>
                     </div>
                 </th>
                 <th></th>
@@ -26,7 +32,7 @@
                 
             </thead>
             <tbody>
-                {% for driver in drivers %}
+                {% for spRes in spRes %}
                 <tr>
                     <td>
                         <label class="checkbox">

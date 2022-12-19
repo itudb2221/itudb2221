@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+{% block title %} Sprint Results {%endblock%}
+{%block content%} 
+<div class="container mt-3 bg-dark">
+    <form action="" method="post" name="addSprintResults">
+        <p class="display-5 text-white">Add Sprint Results </p>
+        
+        <div class="field">
+            <label for="raceId" class="label">Race ID</label>
+            <div class="control">
+                <input type="number" name="raceId" class="input" required />
+            </div>
+        </div>
+        
+        <div class="field">
+            <label for="driverId" class="label">Driver ID</label>
+            <div class="control">
+                <input type="number" name="driverId" class="input" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="constructorId" class="label">Constructor ID</label>
+            <div class="control">
+                <input type="number" name="constructorId" class="input" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="sp_number" class="label">Number</label>
+            <div class="control">
+                <input type="number" name="sp_number" class="input" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="grid" class="label">Grid</label>
+            <div class="control">
+                <input type="number" name="grid" class="input" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="position" class="label">Position</label>
+            <div class="control">
+                <input type="number" name="position" class="input" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="positionText" class="label">Position Text</label>
+            <div class="control">
+                <input type="text" name="positionText" class="input" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="positionOrder" class="label">Position Order</label>
+            <div class="control">
+                <input type="number" name="positionOrder" class="input" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="points" class="label">Points</label>
+            <div class="control">
+                <input type="number" name="points" class="input" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="laps" class="label">Laps</label>
+            <div class="control">
+                <input type="number" name="laps" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="sp_time" class="label">Time</label>
+            <div class="control">
+                <input type="text" name="sp_time" class="input" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="milliseconds" class="label">Milliseconds</label>
+            <div class="control">
+                <input type="number" name="milliseconds" class="input" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="fastestLap" class="label">Fastest Lap</label>
+            <div class="control">
+                <input type="number" name="fastestLap" class="input" required />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="fastestLapTime" class="label">Fastest Lap Time</label>
+            <div class="control">
+                <input type="text" name="fastestLapTime" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="statusId" class="label">Status ID</label>
+            <div class="control">
+                <input type="number" name="statusId" class="input" required />
+            </div>
+        </div>
+        
+    </form>
+</div>
+{%endblock%}

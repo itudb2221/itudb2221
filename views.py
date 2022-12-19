@@ -21,5 +21,21 @@ def edit_tables_page():
 
 def sprint_results_page():
     db = current_app.config["db"]
-    spRes = db.getSprintResults()
-    return render_template("sprint_results.html",spRes = spRes, methods=["GET", "POST"])
+    if request.method == "GET":
+        sprint_results = db.getSprintResults()
+        return render_template("sprint_results.html", sprint_results=sprint_results)
+    else:
+        sprint_results_ids = request.form.getlist("sprint_results_id")
+        for sprint_results_id in sprint_results_ids:
+            db.removeSprintResults(sprint_results_id)
+        return redirect(url_for("sprint_results_page"))
+
+def update_sprint_results_page():
+    db = current_app.config["db"]
+    if request.method == "GET":
+        return render_template("update_spRes.html")
+
+def add_sprint_results_page():
+    db = current_app.config["db"]
+    if request.method == "GET":
+        return render_template("add_spRes.html")
