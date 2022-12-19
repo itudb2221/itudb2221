@@ -10,7 +10,9 @@ def create_app():
     app.add_url_rule('/seasons', view_func=views.seasons_page)
     app.add_url_rule('/driver_standings', view_func=views.driver_standings_page)
     app.add_url_rule('/edit_tables', view_func=views.edit_tables_page)
-    app.add_url_rule('/sprint_results', view_func=views.sprint_results_page)
+    app.add_url_rule('/sprintResults', view_func=views.sprint_results_page(), methods=["GET", "POST"])
+    app.add_url_rule('/updateSprintResults', view_func=views.update_sprint_results_page(), methods=["GET", "POST"])
+    app.add_url_rule('/addSprintResults', view_func=views.add_sprint_results_page(), methods=["GET", "POST"])
     return app
 
 app = create_app()
