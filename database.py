@@ -47,8 +47,8 @@ class Database:
             cursor = connection.cursor()
             query = "UPDATE DRIVERS SET "
             for i in range(len(attrNames)):
-                query += (f" {attrNames[i]} = {attrValues[i]},")
-            query = query[:-1] + "WHERE driverId = ?"
+                query += (f""" {attrNames[i]} = "{attrValues[i]}",""" if isinstance(attrValues[i], str) else f" {attrNames[i]} = {attrValues[i]},") if attrValues[i] != "" else ""
+            query = query[:-1] + " WHERE (driverId = ?)"
             cursor.execute(query, (driverId,))
 
     def remove_driver(self, driverId): # Delete
@@ -99,8 +99,8 @@ class Database:
             cursor = connection.cursor()
             query = "UPDATE CONSTRUCTORS SET "
             for i in range(len(attrNames)):
-                query += (f" {attrNames[i]} = {attrValues[i]},")
-            query = query[:-1] + "WHERE constructorId = ?"
+                query += (f""" {attrNames[i]} = "{attrValues[i]}",""" if isinstance(attrValues[i], str) else f" {attrNames[i]} = {attrValues[i]},") if attrValues[i] != "" else ""
+            query = query[:-1] + "WHERE (constructorId = ?)"
             cursor.execute(query, (constructorId,))
 
     def remove_constructor(self, constructorId): # Delete
@@ -154,8 +154,8 @@ class Database:
             cursor = connection.cursor()
             query = "UPDATE CIRCUITS SET "
             for i in range(len(attrNames)):
-                query += (f" {attrNames[i]} = {attrValues[i]},")
-            query = query[:-1] + "WHERE circuitId = ?"
+                query += (f""" {attrNames[i]} = "{attrValues[i]}",""" if isinstance(attrValues[i], str) else f" {attrNames[i]} = {attrValues[i]},") if attrValues[i] != "" else ""
+            query = query[:-1] + "WHERE (circuitId = ?)"
             cursor.execute(query, (circuitId,))
 
     def remove_circuit(self, circuitId): # Delete
@@ -204,8 +204,8 @@ class Database:
             cursor = connection.cursor()
             query = "UPDATE SEASONS SET "
             for i in range(len(attrNames)):
-                query += (f" {attrNames[i]} = {attrValues[i]},")
-            query = query[:-1] + "WHERE seasonYear = ?"
+                query += (f""" {attrNames[i]} = "{attrValues[i]}",""" if isinstance(attrValues[i], str) else f" {attrNames[i]} = {attrValues[i]},") if attrValues[i] != "" else ""
+            query = query[:-1] + "WHERE (seasonYear = ?)"
             cursor.execute(query, (seasonYear,))
 
     def remove_season(self, seasonYear): # Delete
@@ -312,8 +312,8 @@ class Database:
             cursor = connection.cursor()
             query = "UPDATE RACES SET "
             for i in range(len(attrNames)):
-                query += (f" {attrNames[i]} = {attrValues[i]},")
-            query = query[:-1] + "WHERE raceId = ?"
+                query += (f""" {attrNames[i]} = "{attrValues[i]}",""" if isinstance(attrValues[i], str) else f" {attrNames[i]} = {attrValues[i]},") if attrValues[i] != "" else ""
+            query = query[:-1] + "WHERE (raceId = ?)"
             cursor.execute(query, (raceId,))
 
     def remove_race(self, raceId): # Delete
