@@ -97,7 +97,6 @@ class Qualifying:
         self.q2             = q2
         self.q3             = q3
 
-<<<<<<< HEAD
 class PitStop:
     def __init__(self, raceId, driverId, stop, lap, time, duration, milliseconds) -> None:
         self.raceId         = raceId
@@ -107,7 +106,7 @@ class PitStop:
         self.time           = time
         self.duration       = duration
         self.milliseconds   = milliseconds
-=======
+        
 class LapTime:
     def __init__(self, raceId, driverId, lap, position, lapTime, milliseconds):
         self.raceId = raceId
@@ -116,4 +115,3 @@ class LapTime:
         self.position = position
         self.lapTime = lapTime
         self.milliseconds = milliseconds
->>>>>>> origin/main

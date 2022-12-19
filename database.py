@@ -394,7 +394,7 @@ class Database:
             cursor.execute(query)
             connection.commit()
             for qualifyId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3 in cursor:
-                qualify.append(Q(qualifyId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3))
+                qualify.append(Qualifying(qualifyId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3))
         return qualify
 
     def update_qualifying(self, qualifyId, attrNames, attrValues): # Update
@@ -458,7 +458,7 @@ class Database:
             cursor.execute(query)
             connection.commit()
             for sprintResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId in cursor:
-                sprint_results.append(SprintResults(printResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
+                sprint_results.append(SprintResults(sprintResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
         return sprint_results
 
     def updateSprintResults(self, sprintResultId, attrNames, attrValues):
