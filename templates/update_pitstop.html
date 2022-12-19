@@ -1,0 +1,18 @@
+<!-- Ataberk Gürel -->
+{% extends "layout.html" %}
+{% block title %} Update Pit Stop {%endblock%}
+{%block content%}
+<div class="container-fluid mt-3 bg-dark">
+    <p class="display-4 text-white">Update Pit Stop</p>
+    <form action="{{'/pit_stops/update/' + pitstop.raceId|string + '-' + pitstop.driverId|string + '-' + pitstop.time|string}}" method="post">
+        <input name="raceId" value="{{ pitstop.raceId }}" type="number" placeholder="Race Id">
+        <input name="driverId" value="{{ pitstop.driverId }}" type="number" placeholder="Driver Id">
+        <input name="stop" value="{{ pitstop.stop }}"type="number" placeholder="Stop">
+        <input name="lap" value="{{ pitstop.lap }}" type="number" placeholder="Lap">
+        <input name="time" value="{{ pitstop.time }}" type="time" placeholder="Time">
+        <input name="duration" value="{{ pitstop.duration }}" type="number" step="0.001" placeholder="Duration">
+        <input name="milliseconds" value="{{ pitstop.milliseconds }}" type="number" placeholder="Milliseconds">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{%endblock%}

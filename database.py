@@ -5,6 +5,7 @@ from models.Constructor import Constructor
 from models.Race import Race
 from models.Season import Season
 from models.SprintResult import SprintResult
+from models.PitStop import PitStop
 import sqlite3 as sqlite
 
 class Database:
@@ -65,6 +66,16 @@ class Database:
             query = "DELETE FROM DRIVERS WHERE (driverId = %s)"
             cursor.execute(query, driverId)
             connection.commit()
+
+    def get_driver_by_id(self, driverId):
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM DRIVERS WHERE driverId = ? LIMIT 1"
+            cursor.execute(query, (driverId,))
+            connection.commit()
+            
+            for driverId, driverRef, driverNumber, code, forename, surname, dob, nationality, driverUrl in cursor:
+                return Driver(driverId, driverRef, driverNumber, code, forename, surname, dob, nationality, driverUrl)
 
 # ============== Drivers End =============== #
 
@@ -355,4 +366,56 @@ class Database:
             )
             connection.commit()
 # ============== CONSTRUCTORS END ============== #
+
+# ============== PIT STOPS START ============== #
+
+    def addPitStop(self, raceId, driverId, stop, lap, time, duration, milliseconds):
+
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO PIT_STOPS (raceId, driverId, stop, lap, time, duration, milliseconds) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            cursor.execute(query, (raceId, driverId, stop, lap, time, duration, milliseconds))
+            connection.commit()
+
+    def getPitStops(self):
+        pit_stops = []
+
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM PIT_STOPS ORDER BY raceId, time LIMIT 100"
+            cursor.execute(query)
+            connection.commit()
+            
+            for raceId, driverId, stop, lap, time, duration, milliseconds in cursor:
+                pit_stops.append(PitStop(raceId, driverId, stop, lap, time, duration, milliseconds))
+
+        return pit_stops
+
+    def deletePitStop(self, raceId, driverId, time):
+        with sqlite.connect(self.dbfile) as connection:
+            print(raceId, driverId, time)
+            cursor = connection.cursor()
+            query = "DELETE FROM PIT_STOPS WHERE raceId = ? AND driverId = ? and time = ?"
+            cursor.execute(query, (raceId, driverId, time,))
+            connection.commit()
+
+    def updatePitStop(self, raceId, driverId, time, updatedRaceId, updatedDriverId, updatedStop, updatedLap, updatedTime, updatedDuration, updatedMilliseconds):
+        with sqlite.connect(self.dbfile) as connection:
+            print(raceId, driverId, time)
+            cursor = connection.cursor()
+            query = "UPDATE PIT_STOPS SET raceId = ?, driverId=?, stop=?, lap=?, time=?, duration=?, milliseconds=? WHERE raceId=? AND driverId=? and time=?"
+            cursor.execute(query, (updatedRaceId, updatedDriverId, updatedStop, updatedLap, updatedTime, updatedDuration, updatedMilliseconds, raceId, driverId, time))
+            connection.commit()
+
+    def getPitStopByRaceIdAndDriverIdAndTime(self, raceId, driverId, time):
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM PIT_STOPS WHERE raceId = ? AND driverId = ? AND time = ? LIMIT 1"
+            cursor.execute(query, (raceId, driverId, time,))
+            connection.commit()
+            
+            for raceId, driverId, stop, lap, time, duration, milliseconds in cursor:
+                return PitStop(raceId, driverId, stop, lap, time, duration, milliseconds)
+
+# ============== PIT STOPS END ============== #
 
