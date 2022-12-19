@@ -353,30 +353,30 @@ class Database:
 # ============== RACES END ============== #
 
 # ============== Sprint Results START ============== #
-    # def addSprintResults(self, spRes: sprintResults):
-    #     with sqlite.connect(self.dbfile) as connection:
-    #         cursor = connection.cursor()
-    #         query = "INSERT INTO SPRINT_RESULTS (sprintResultId, raceId, driverId, constructorId, sp_number,grid,position,positionText,positionOrder,points,laps,sp_time,milliseconds,fastestLap,fastestLapTime,statusId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-    #         cursor.execute(
-    #             query,
-    #             (
-    #                 spRes.resultId,
-    #                 spRes.raceId,
-    #                 spRes.driverId,
-    #                 spRes.constructorId,
-    #                 spRes.number,
-    #                 spRes.grid,
-    #                 spRes.position,
-    #                 spRes.positionText,
-    #                 spRes.positionOrder,
-    #                 spRes.points,
-    #                 spRes.laps,
-    #                 spRes.time,
-    #                 spRes.milliseconds,
-    #                 spRes.fastestLap,
-    #                 spRes.fastestLapTime,
-    #                 spRes.statusId
-    #             )
-    #         )
-    #         connection.commit()
+    def addSprintResults(self, spRes: sprintResults):
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO SPRINT_RESULTS (sprintResultId, raceId, driverId, constructorId, sp_number,grid,position,positionText,positionOrder,points,laps,sp_time,milliseconds,fastestLap,fastestLapTime,statusId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            cursor.execute(
+                query,
+                (
+                    spRes.resultId,
+                    spRes.raceId,
+                    spRes.driverId,
+                    spRes.constructorId,
+                    spRes.number,
+                    spRes.grid,
+                    spRes.position,
+                    spRes.positionText,
+                    spRes.positionOrder,
+                    spRes.points,
+                    spRes.laps,
+                    spRes.time,
+                    spRes.milliseconds,
+                    spRes.fastestLap,
+                    spRes.fastestLapTime,
+                    spRes.statusId
+                )
+            )
+            connection.commit()
 # ============== Sprint Results END ============== #
