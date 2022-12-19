@@ -11,15 +11,12 @@
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="height:60">
             <div class="container-fluid">
                 <ul class="navbar-nav nav-pills">
-                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('home') }}">Home</a> </li>
-                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('drivers') }}">Drivers</a> </li>
-                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('driver_standings') }}">Driver Standings</a> </li>
-                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('seasons') }}">Seasons</a> </li>
-                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('pit_stops') }}">Pit Stops</a> </li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('home_page') }}">Home</a> </li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('drivers_page') }}">Drivers</a> </li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('driver_standings_page') }}">Driver Standings</a> </li>
+                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('races_page') }}">Races</a> </li>
+                    <!-- <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('seasons_page') }}">Seasons</a> </li> -->
                 </ul>
-                <span class="dropdown float-end text-white">
-                    <a class="dropdown-item" href="{{ url_for('edit_tables_page') }}">Edit Base Tables</a>
-                </span>
             </div>
         </nav>
         {%block content%}{%endblock%}
