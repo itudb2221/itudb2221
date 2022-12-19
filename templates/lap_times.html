@@ -1,0 +1,59 @@
+<!-- Rojen Arda Şeşen -->
+{% extends "layout.html" %}
+{% block title %} Lap Times {%endblock%}
+{%block content%}
+<div class="container-fluid mt-3 bg-dark">
+    <form id="delete_lap_time" action="" method="post" name="delete_lap_time">
+        <table class="table table-dark">
+            <tbody>
+                <tr>
+                    <td><p class="display-5 text-white">Lap Times</p></td>
+                    <td>
+                        <div class="text-end">
+                            <a class = "btn btn-primary text-end" href="{{ url_for('add_lap_time_page') }}">Add Lap Time</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-dark table-hover">
+            <thead>
+                <th>
+                    <div class="control">
+                        <button form="delete_lap_time" class="btn btn-primary">Delete</button>
+                    </div>
+                </th>
+                <th>
+                    <div class="control">
+                        <a class = "btn btn-primary text-end" href="{{ url_for('update_lap_time_page') }}">Update</a>
+                    </div>
+                </th>
+                <th>Race</th>
+                <th>Driver</th>
+                <th>Lap</th>
+                <th>Position</th>
+                <th>Lap Time</th>
+                <th>Milliseconds</th>
+            </thead>
+            <tbody>
+                {% for lap_time in lap_times %}
+                <tr>
+                    <td>
+                        <label class="checkbox">
+                            <input type="checkbox" name="lap_key" value="{{lap_time.raceId[0],lap_time.driverId[0],lap_time.lap}}">
+                        </label>
+                    </td>
+                    <td></td>
+                    <td>{{lap_time.raceId[1]}}</td>
+                    <td>{{lap_time.driverId[1]}}</td>
+                    <td>{{lap_time.lap}}</td>
+                    <td>{{lap_time.position}}</td>
+                    <td>{{lap_time.lapTime}}</td>
+                    <td>{{lap_time.milliseconds}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+{%endblock%}

@@ -96,3 +96,12 @@ class Qualifying:
         self.q1             = q1
         self.q2             = q2
         self.q3             = q3
+
+class LapTime:
+    def __init__(self, raceId, driverId, lap, position, lapTime, milliseconds):
+        self.raceId = raceId
+        self.driverId = driverId
+        self.lap = lap
+        self.position = position
+        self.lapTime = lapTime
+        self.milliseconds = milliseconds
