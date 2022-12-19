@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block title %} Sprint Results {%endblock%}
+{%block content%}
+<div class="container-fluid mt-3 bg-dark">
+    <p class="display-5 text-white">Sprint Results</p>
+    <form action="" method="post" name="deleteSprintResults">
+        <table class="table table-dark table-hover">
+            <thead>
+                <th>
+                    <div class="control">
+                        <button class="btn btn-primary">Delete</button>
+                    </div>
+                    <div class="control">
+                        <a href="{{ url_for('update_spRes') }}">Update</a>
+                    </div>
+                    <div class="control">
+                        <a  href="{{ url_for('add_spRes') }}">Add a Sprint Result</a>
+                    </div>
+                </th>
+                <th></th>
+                <th>Number</th>
+                <th>Grid</th>
+                <th>Position</th>
+                <th></th>
+                <th>Order</th>
+                <th>Points</th>
+                <th>Laps</th>
+                <th>Time</th>
+                <th>Milliseconds</th>
+                <th>Fastest Lap</th>
+                <th>Fastest Lap Time</th>
+                
+            </thead>
+            <tbody>
+                {% for spRes in spRes %}
+                <tr>
+                    <td>
+                        <label class="checkbox">
+                            <input type="checkbox" name="sprintResultsId" value="{{spRes.sprintResultsId}}">
+                        </label>
+                    </td>
+                    <td>{{spRes.sprintResultsId}}</td>
+                    <td>{{spRes.sp_number}}</td>
+                    <td>{{spRes.grid}}</td>
+                    <td>{{spRes.position}}</td>
+                    <td>{{spRes.positionText}}</td>
+                    <td>{{spRes.positionOrder}}</td>
+                    <td>{{spRes.points}}</td>
+                    <td>{{spRes.laps}}</td>
+                    <td>{{spRes.sp_time}}</td>
+                    <td>{{spRes.milliseconds}}</td>
+                    <td>{{spRes.fastestLap}}</td>
+                    <td>{{spRes.fastestLapTime}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+{%endblock%}

@@ -1,0 +1,49 @@
+<!-- Rojen Arda Şeşen -->
+{% extends "layout.html" %}
+{% block title %} Lap Times {%endblock%}
+{%block content%}
+<div class="container mt-3 bg-dark">
+    <form action="" method="post" name="update_lap_time">
+        <p class="display-5 text-white">Update Lap Time</p>
+        <div class="field">
+            <label for="raceId" class="label">Race ID</label>
+            <div class="control">
+                <input type="number" name="raceId" class="input" required/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="driverId" class="label">Driver ID</label>
+            <div class="control">
+                <input type="number" name="driverId" class="input"  required/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="lap" class="label">Lap Number</label>
+            <div class="control">
+                <input type="number" name="lap" class="input" required/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="position" class="label">position</label>
+            <div class="control">
+                <input type="number" name="position" class="input"/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="lapTime" class="label">lapTime</label>
+            <div class="control">
+                <input type="number" name="lapTime" class="input"/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="milliseconds" class="label">milliseconds</label>
+            <div class="control">
+                <input type="text" name="milliseconds" class="input"/>
+            </div>
+        </div>
+        <div class="control text-end">
+            <button class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>
+{%endblock%}

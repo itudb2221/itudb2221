@@ -1,11 +1,4 @@
-from models.Driver import Driver 
-from models.DriverStanding import DriverStanding
-from models.Circuit import Circuit
-from models.Constructor import Constructor
-from models.Race import Race
-from models.Season import Season
-from models.SprintResult import SprintResult
-from models.PitStop import PitStop
+from models import *
 import sqlite3 as sqlite
 
 class Database:
@@ -371,6 +364,7 @@ class Database:
             connection.commit()
 # ============== RACES END ============== #
 
+
 # ============== QUALIFYING START ============== #
     def add_qualifying(self, qualifying: Qualifying): # Create
         with sqlite.connect(self.dbfile) as connection:
@@ -428,7 +422,9 @@ class Database:
 # ============== QUALIFYING END ============== #
 
 # ============== Sprint Results START ============== #
-    def addSprintResults(self, spRes: sprintResults):
+
+    def addSprintResults(self, spRes: SprintResults):
+
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
             query = "INSERT INTO SPRINT_RESULTS (raceId, driverId, constructorId, sp_number,grid,position,positionText,positionOrder,points,laps,sp_time,milliseconds,fastestLap,fastestLapTime,statusId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
@@ -438,14 +434,14 @@ class Database:
                     spRes.raceId,
                     spRes.driverId,
                     spRes.constructorId,
-                    spRes.number,
+                    spRes.sp_number,
                     spRes.grid,
                     spRes.position,
                     spRes.positionText,
                     spRes.positionOrder,
                     spRes.points,
                     spRes.laps,
-                    spRes.time,
+                    spRes.sp_time,
                     spRes.milliseconds,
                     spRes.fastestLap,
                     spRes.fastestLapTime,
@@ -462,7 +458,7 @@ class Database:
             cursor.execute(query)
             connection.commit()
             for sprintResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId in cursor:
-                sprint_results.append(SprintResult(sprintResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
+                sprint_results.append(SprintResults(printResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
         return sprint_results
 
     def updateSprintResults(self, sprintResultId, attrNames, attrValues):
@@ -488,6 +484,71 @@ class Database:
             cursor.execute(query, sprintResultId)
             connection.commit()
 # ============== Sprint Results END ============== #
+
+# ============== Lap Times START ============== #
+    def add_lap_time(self, lap_time: LapTime): # Create
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO LAP_TIMES (raceId, driverId, lap, position, lapTime, milliseconds) VALUES (?, ?, ?, ?, ?, ?)"
+            cursor.execute(
+                query,
+                (
+                    lap_time.raceId,
+                    lap_time.driverId,
+                    lap_time.lap,
+                    lap_time.position,
+                    lap_time.lapTime,
+                    lap_time.milliseconds
+                )
+            )
+            connection.commit()
+    
+    def get_lap_times(self): # Read
+        lap_times = list()
+        with(sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM LAP_TIMES LIMIT 10000"
+            cursor.execute(query)
+            connection.commit()
+            cursor2 = connection.cursor()
+            for raceId, driverId, lap, position, lapTime, milliseconds in cursor:
+                cursor2.execute("SELECT raceYear, raceName from RACES WHERE (raceId = ?)", (raceId,))
+                values = cursor2.fetchone()
+                if not values:
+                    continue
+                raceYear, raceName = values
+                cursor2.execute("SELECT forename, surname FROM DRIVERS WHERE (driverId = ?)", (driverId,))
+                values = cursor2.fetchone()
+                if not values:
+                    continue
+                forename, surname = values
+                lap_times.append(LapTime([raceId, f"{raceYear} {raceName}"], [driverId, f"{forename} {surname}"], lap, position, lapTime, milliseconds))
+        return lap_times
+
+    def update_lap_time(self, raceId, driverId, lap, attrNames, attrValues): # Update
+        if (len(attrNames) != len(attrValues)) or not len(attrNames):
+            print("Invalid input. ") # !!! Display message on screen later.
+            return
+
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE LAP_TIMES SET "
+            for i in range(len(attrNames)):
+                query += (f""" {attrNames[i]} = "{attrValues[i]}",""" if isinstance(attrValues[i], str) else f" {attrNames[i]} = {attrValues[i]},") if attrValues[i] != "" else ""
+            query = query[:-1] + "WHERE ((raceId, driverId, lap) = (?, ?, ?))"
+            if query != "UPDATE LAP_TIMES SET WHERE ((raceId, driverId, lap) = (?, ?, ?))":
+                cursor.execute(query, (raceId, driverId, lap))
+
+    def remove_lap_time(self, lap_key): # Delete
+        with (sqlite.connect(self.dbfile)) as connection:
+            raceId, driverId, lap = (lap_key[1:-1]).split(',')
+            cursor = connection.cursor()
+            query = "DELETE FROM LAP_TIMES WHERE ((raceId, driverId, lap) = (?, ?, ?))"
+            cursor.execute(query, (raceId, driverId, lap))
+            connection.commit()
+
+# ============== Lap Times END ============== #
+
 
 # ============== CONSTRUCTORS START ============== #
     def addConstructors(self, cst: Constructor):
