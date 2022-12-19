@@ -138,6 +138,29 @@ def add_driver_standing_page():
         finally:
             return redirect(url_for("driver_standings_page"))
 
+
+
+def sprint_results_page():
+    db = current_app.config["db"]
+    if request.method == "GET":
+        sprint_results = db.getSprintResults()
+        return render_template("sprint_results.html", sprint_results=sprint_results)
+    else:
+        sprint_results_ids = request.form.getlist("sprint_results_id")
+        for sprint_results_id in sprint_results_ids:
+            db.removeSprintResults(sprint_results_id)
+        return redirect(url_for("sprint_results_page"))
+
+def update_sprint_results_page():
+    db = current_app.config["db"]
+    if request.method == "GET":
+        return render_template("update_spRes.html")
+
+def add_sprint_results_page():
+    db = current_app.config["db"]
+    if request.method == "GET":
+        return render_template("add_spRes.html")
+
 # ============ RACES ============ #
 
 def races_page():
@@ -241,3 +264,4 @@ def add_race_page():
             print(traceback.format_exc())
         finally:
             return redirect(url_for("races_page"))
+

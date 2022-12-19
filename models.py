@@ -66,7 +66,7 @@ class DriverStanding:
         self.positionText       = positionText
         self.wins               = wins
 
-class sprintResults:
+class SprintResults:
     def __init__(self, sprintResultId ,raceId,driverId,constructorId,sp_number ,grid,position,positionText,positionOrder,points,laps,sp_time ,milliseconds,fastestLap,fastestLapTime,statusId):
         self.sprintResultId  = sprintResultId 
         self.raceId = raceId

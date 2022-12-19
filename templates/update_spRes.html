@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+{% block title %} Sprint Results {%endblock%}
+{%block content%} 
+<div class="container mt-3 bg-dark">
+    <form action="" method="post" name="updateSprintResults">
+        <p class="display-5 text-white">Update Sprint Results</p>
+        <div class="field">
+            <label for="sprintResultsId" class="label">Sprint Results ID</label>
+            <div class="control">
+                <input type="number" name="sprintResultsId" class="input" required/>
+            </div>
+
+        </div>
+        
+        <div class="field">
+            <label for="sp_number" class="label">Number</label>
+            <div class="control">
+                <input type="text" name="sp_number" class="input" />
+            </div>
+
+        <div class="field">
+            <label for="grid" class="label">Grid</label>
+            <div class="control">
+                <input type="text" name="grid" class="input" />
+            </div>
+            
+        <div class="field">
+            <label for="position" class="label">Position</label>
+            <div class="control">
+                <input type="text" name="position" class="input" />
+            </div>
+
+        <div class="field">
+            <label for="positionText" class="label">Position Text</label>
+            <div class="control">
+                <input type="text" name="positionText" class="input" />
+            </div>
+
+        <div class="field">
+            <label for="positionOrder" class="label">Position Order</label>
+            <div class="control">
+                <input type="text" name="positionOrder" class="input" />
+            </div>
+        
+        <div class="field">
+            <label for="points" class="label">Points</label>
+            <div class="control">
+                <input type="text" name="points" class="input" />
+            </div>
+
+        <div class="field">
+            <label for="laps" class="label">Laps</label>
+            <div class="control">
+                <input type="text" name="laps" class="input" />
+            </div>
+        
+        <div class="field">
+            <label for="sp_time" class="label">Time</label>
+            <div class="control">
+                <input type="text" name="sp_time" class="input" />
+            </div>
+
+        <div class="field">
+            <label for="milliseconds" class="label">Milliseconds</label>
+            <div class="control">
+                <input type="text" name="milliseconds" class="input" />
+            </div>
+
+        <div class="field">
+            <label for="fastestLap" class="label">Fastest Lap</label>
+            <div class="control">
+                <input type="text" name="fastestLap" class="input" />
+            </div>
+
+        <div class="field">
+            <label for="fastestLapTime" class="label">Fastest Lap Time</label>
+            <div class="control">
+                <input type="text" name="fastestLapTime" class="input" />
+            </div>
+    </form>
+</div>
+{%endblock%}
