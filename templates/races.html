@@ -1,0 +1,81 @@
+<!-- Rojen Arda Şeşen -->
+{% extends "layout.html" %}
+{% block title %} Races {%endblock%}
+{%block content%}
+<div class="container-fluid mt-3 bg-dark">
+    <form id="delete_race" action="" method="post" name="delete_race">
+        <table class="table table-dark">
+            <tbody>
+                <tr>
+                    <td><p class="display-5 text-white">Races</p></td>
+                    <td>
+                        <div class="text-end">
+                            <a class = "btn btn-primary text-end" href="{{ url_for('add_race_page') }}">Add Race</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-dark table-hover">
+            <thead>
+                <th>
+                    <div class="control">
+                        <button form="delete_race" class="btn btn-primary">Delete</button>
+                    </div>
+                </th>
+                <th>
+                    <div class="control">
+                        <a class = "btn btn-primary text-end" href="{{ url_for('update_race_page') }}">Update</a>
+                    </div>
+                </th>
+                <th>raceYear</th>
+                <th>raceRound</th>
+                <th>circutId</th>
+                <th>raceName</th>
+                <th>raceDate</th>
+                <th>raceTime</th>
+                <th>raceUrl</th>
+                <th>fp1_date</th>
+                <th>fp1_time</th>
+                <th>fp2_date</th>
+                <th>fp2_time</th>
+                <th>fp3_date</th>
+                <th>fp3_time</th>
+                <th>quali_date</th>
+                <th>quali_time</th>
+                <th>sprint_date</th>
+                <th>sprint_time</th>
+            </thead>
+            <tbody>
+                {% for race in races %}
+                <tr>
+                    <td>
+                        <label class="checkbox">
+                            <input type="checkbox" name="race_id" value="{{race.raceId}}">
+                        </label>
+                    </td>
+                    <td>{{race.raceId}}</td>
+                    <td>{{race.raceYear}}</td>
+                    <td>{{race.raceRound}}</td>
+                    <td>{{race.circutId}}</td>
+                    <td>{{race.raceName}}</td>
+                    <td>{{race.raceDate}}</td>
+                    <td>{{race.raceTime}}</td>
+                    <td>{{race.raceUrl}}</td>
+                    <td>{{race.fp1_date}}</td>
+                    <td>{{race.fp1_time}}</td>
+                    <td>{{race.fp2_date}}</td>
+                    <td>{{race.fp2_time}}</td>
+                    <td>{{race.fp3_date}}</td>
+                    <td>{{race.fp3_time}}</td>
+                    <td>{{race.quali_date}}</td>
+                    <td>{{race.quali_time}}</td>
+                    <td>{{race.sprint_date}}</td>
+                    <td>{{race.sprint_time}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+{%endblock%}

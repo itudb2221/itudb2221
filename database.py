@@ -4,23 +4,22 @@ import sqlite3 as sqlite
 class Database:
     def __init__(self, dbfile):
         self.dbfile = dbfile
-    # ============== Drivers Start =============== #
-    def addDriver(self, driver: Driver): # Create
+# ============== Drivers Start =============== #
+    def add_driver(self, driver: Driver): # Create
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO DRIVERS (driverId, driverRef, driverNumber, code, forename, surname, dob, nationality, driverUrl) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            query = "INSERT INTO DRIVERS (driverRef, driverNumber, code, forename, surname, dob, nationality, driverUrl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
             cursor.execute(
                 query,
                 (
-                    driver.driverId,
                     driver.driverRef,
-                    driver.number,
+                    driver.driverNumber,
                     driver.code,
                     driver.forename,
                     driver.surname,
                     driver.dob,
                     driver.nationality,
-                    driver.url
+                    driver.driverUrl
                 )
             )
             connection.commit()
@@ -29,14 +28,14 @@ class Database:
         drivers = list()
         with(sqlite.connect(self.dbfile)) as connection:
             cursor = connection.cursor()
-            query = "SELECT * FROM DRIVERS ORDER BY dob"
+            query = "SELECT * FROM DRIVERS" # ORDER BY dob"
             cursor.execute(query)
             connection.commit()
-            for driverId, driverRef, number, code, forename, surname, dob, nationality, url in cursor:
-                drivers.append(Driver(driverId, driverRef, number, code, forename, surname, dob, nationality, url))
+            for driverId, driverRef, driverNumber, code, forename, surname, dob, nationality, driverUrl in cursor:
+                drivers.append(Driver(driverId, driverRef, driverNumber, code, forename, surname, dob, nationality, driverUrl))
         return drivers
 
-    def update_driver(self, driverId, attrNames, attrValues):
+    def update_driver(self, driverId, attrNames, attrValues): # Update
         if "driverId" in attrNames:
             print("Primary key cannot be updated.") # !!! Display message on screen later.
             return
@@ -48,42 +47,181 @@ class Database:
             cursor = connection.cursor()
             query = "UPDATE DRIVERS SET "
             for i in range(len(attrNames)):
-                query += (f" {attrNames[i]} = {attrValues[i]},")
-            query = query[:-1] + "WHERE driverId = %s"
-            cursor.execute(query, driverId)
-
-
+                query += (f""" {attrNames[i]} = "{attrValues[i]}",""" if isinstance(attrValues[i], str) else f" {attrNames[i]} = {attrValues[i]},") if attrValues[i] != "" else ""
+            query = query[:-1] + " WHERE (driverId = ?)"
+            if query != "UPDATE DRIVERS SET WHERE (driverId = ?)":
+                cursor.execute(query, (driverId,))
 
     def remove_driver(self, driverId): # Delete
         with (sqlite.connect(self.dbfile)) as connection:
             cursor = connection.cursor()
-            query = "DELETE FROM DRIVERS WHERE (driverId = %s)"
-            cursor.execute(query, driverId)
+            query = "DELETE FROM DRIVERS WHERE (driverId = ?)"
+            cursor.execute(query, (driverId,))
             connection.commit()
 
-
-
-
 # ============== Drivers End =============== #
+
+# ============== Constructors Start ============== #
+    def add_constructor(self, constructor: Constructor): # Create
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO CONSTRUCTORS (constructorId, constructorRef, constructorName, nationality, constructorUrl) VALUES (?, ?, ?, ?)"
+            cursor.execute(
+                query,
+                (
+                    constructor.constructorRef,
+                    constructor.constructorName,
+                    constructor.nationality,
+                    constructor.constructorUrl
+                )
+            )
+            connection.commit()
+    
+    def get_constructors(self): # Read
+        constructors = list()
+        with(sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM CONSTRUCTORS" # ORDER BY dob"
+            cursor.execute(query)
+            connection.commit()
+            for constructorId, constructorRef, constructorName, nationality, constructorUrl in cursor:
+                constructors.append(Constructor(constructorId, constructorRef, constructorName, nationality, constructorUrl))
+        return constructors
+
+    def update_constructor(self, constructorId, attrNames, attrValues): # Update
+        if "constructorId" in attrNames:
+            print("Primary key cannot be updated.") # !!! Display message on screen later.
+            return
+        if (len(attrNames) != len(attrValues)) or not len(attrNames):
+            print("Invalid input. ") # !!! Display message on screen later.
+            return
+
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE CONSTRUCTORS SET "
+            for i in range(len(attrNames)):
+                query += (f""" {attrNames[i]} = "{attrValues[i]}",""" if isinstance(attrValues[i], str) else f" {attrNames[i]} = {attrValues[i]},") if attrValues[i] != "" else ""
+            query = query[:-1] + "WHERE (constructorId = ?)"
+            if query != "UPDATE CONSTRUCTORS SET WHERE (constructorId = ?)":
+                cursor.execute(query, (constructorId,))
+
+    def remove_constructor(self, constructorId): # Delete
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM CONSTRUCTORS WHERE (constructorId = ?)"
+            cursor.execute(query, (constructorId,))
+            connection.commit()
+# ============== Constructors End ============== #
+
+# ============== Circuits Start ============== #
+    def add_circuit(self, circuit: Circuit): # Create
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO CIRCUITS (circuitRef, circuitName, circutitLocation, country, lat, lng, alt, circuitUrl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            cursor.execute(
+                query,
+                (
+                    circuit.circuitRef,
+                    circuit.circuitName,
+                    circuit.circutitLocation,
+                    circuit.country,
+                    circuit.lat,
+                    circuit.lng,
+                    circuit.alt,
+                    circuit.circuitUrl
+                )
+            )
+            connection.commit()
+    
+    def get_circuits(self): # Read
+        circuits = list()
+        with(sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM CIRCUITS" # ORDER BY dob"
+            cursor.execute(query)
+            connection.commit()
+            for circuitId, circuitRef, circuitName, circutitLocation, country, lat, lng, alt, circuitUrl in cursor:
+                circuits.append(Circuit(circuitId, circuitRef, circuitName, circutitLocation, country, lat, lng, alt, circuitUrl))
+        return circuits
+
+    def update_circuit(self, circuitId, attrNames, attrValues): # Update
+        if "circuitId" in attrNames:
+            print("Primary key cannot be updated.") # !!! Display message on screen later.
+            return
+        if (len(attrNames) != len(attrValues)) or not len(attrNames):
+            print("Invalid input. ") # !!! Display message on screen later.
+            return
+
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE CIRCUITS SET "
+            for i in range(len(attrNames)):
+                query += (f""" {attrNames[i]} = "{attrValues[i]}",""" if isinstance(attrValues[i], str) else f" {attrNames[i]} = {attrValues[i]},") if attrValues[i] != "" else ""
+            query = query[:-1] + "WHERE (circuitId = ?)"
+            if query != "UPDATE CIRCUITS SET WHERE (circuitId = ?)":
+                cursor.execute(query, (circuitId,))
+
+    def remove_circuit(self, circuitId): # Delete
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM CIRCUITS WHERE (circuitId = ?)"
+            cursor.execute(query, (circuitId,))
+            connection.commit()
+# ============== Circuits End ============== #
+
 
 # ============== Seasons Start =============== #
     def addSeason(self, season: Season):
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO SEASONS (year, seasonUrl) VALUES (?, ?)"
+            query = "INSERT INTO SEASONS (seasonYear, seasonUrl) VALUES (?, ?)"
             cursor.execute(
                 query,
                 (
-                    season.year,
-                    season.url,
+                    season.seasonYear,
+                    season.seasonUrl,
                 )
             )
             connection.commit()
-        
+    
+    def get_seasons(self): # Read
+        seasons = list()
+        with(sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM SEASONS" # ORDER BY dob"
+            cursor.execute(query)
+            connection.commit()
+            for seasonYear, seasonUrl in cursor:
+                seasons.append(Season(seasonYear, seasonUrl))
+        return seasons
+
+    def update_season(self, seasonYear, attrNames, attrValues): # Update
+        if "seasonYear" in attrNames:
+            print("Primary key cannot be updated.") # !!! Display message on screen later.
+            return
+        if (len(attrNames) != len(attrValues)) or not len(attrNames):
+            print("Invalid input. ") # !!! Display message on screen later.
+            return
+
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE SEASONS SET "
+            for i in range(len(attrNames)):
+                query += (f""" {attrNames[i]} = "{attrValues[i]}",""" if isinstance(attrValues[i], str) else f" {attrNames[i]} = {attrValues[i]},") if attrValues[i] != "" else ""
+            query = query[:-1] + "WHERE (seasonYear = ?)"
+            if query != "UPDATE SEASONS SET WHERE (seasonYear = ?)":
+                cursor.execute(query, (seasonYear,))
+
+    def remove_season(self, seasonYear): # Delete
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM SEASONS WHERE (seasonYear = ?)"
+            cursor.execute(query, (seasonYear,))
+            connection.commit()
 # ============== Seasons End =============== #
 
 # ============== Driver Standings Start =============== #
-    def addDriverStanding(self, dst: DriverStanding):
+    def add_driver_standing(self, dst: DriverStanding): # Create
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
             query = "INSERT INTO DRIVER_STANDINGS (raceId, driverId, points, position, positionText, wins) VALUES (?, ?, ?, ?, ?, ?)"
@@ -99,11 +237,182 @@ class Database:
                 )
             )
             connection.commit()
+    
+    def get_driver_standings(self): # Read
+        driver_standings = list()
+        import time
+        with(sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM DRIVER_STANDINGS LIMIT 1000" # ORDER BY dob"
+            cursor.execute(query)
+            connection.commit()
+            cursor2 = connection.cursor()
+            for driverStandingsId, raceId, driverId, points, position, positionText, wins in cursor:
+                cursor2.execute("SELECT raceYear, raceName from RACES WHERE (raceId = ?)", (raceId,))
+                values = cursor2.fetchone()
+                if not values:
+                    continue
+                raceYear, raceName = values
+                cursor2.execute("SELECT forename, surname FROM DRIVERS WHERE (driverId = ?)", (driverId,))
+                values = cursor2.fetchone()
+                if not values:
+                    continue
+                forename, surname = values
+                driver_standings.append(DriverStanding(driverStandingsId, [raceId, f"{raceYear} {raceName}"], [driverId, f"{forename} {surname}"], points, position, positionText, wins))
+        return driver_standings
+
+    def update_driver_standing(self, driverStandingsId, attrNames, attrValues): # Update
+        if "driverStandingsId" in attrNames:
+            print("Primary key cannot be updated.") # !!! Display message on screen later.
+            return
+        if (len(attrNames) != len(attrValues)) or not len(attrNames):
+            print("Invalid input. ") # !!! Display message on screen later.
+            return
+
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE DRIVER_STANDINGS SET "
+            for i in range(len(attrNames)):
+                query += (f""" {attrNames[i]} = "{attrValues[i]}",""" if isinstance(attrValues[i], str) else f" {attrNames[i]} = {attrValues[i]},") if attrValues[i] != "" else ""
+            query = query[:-1] + "WHERE (driverStandingsId = ?)"
+            if query != "UPDATE DRIVER_STANDINGS SET WHERE (driverStandingsId = ?)":
+                cursor.execute(query, (driverStandingsId,))
+
+    def remove_driver_standing(self, driverStandingsId): # Delete
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM DRIVER_STANDINGS WHERE (driverStandingsId = ?)"
+            cursor.execute(query, (driverStandingsId,))
+            connection.commit()
+
 # ============== Driver Standings End =============== #
 
+# ============== RACES START ============== #
+    def add_race(self, races: Race):
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO RACES (raceYear, raceRound, circuitId, raceName, raceDate, raceTime, raceUrl, fp1_date, fp1_time, fp2_date, fp2_time, fp3_date, fp3_time, quali_date, quali_time, sprint_date, sprint_time ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            cursor.execute(
+                query,
+                (
+                    races.raceYear,
+                    races.raceRound,
+                    races.circutId,
+                    races.raceName,
+                    races.raceDate,
+                    races.raceTime,
+                    races.raceUrl,
+                    races.fp1_date,
+                    races.fp1_time,
+                    races.fp2_date,
+                    races.fp2_time,
+                    races.fp3_date,
+                    races.fp3_time,
+                    races.quali_date,
+                    races.quali_time,
+                    races.sprint_date,
+                    races.sprint_time
+                )
+            )
+            connection.commit()
+    
+    def get_races(self): # Read
+        races = list()
+        with(sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM RACES" # ORDER BY dob"
+            cursor.execute(query)
+            connection.commit()
+            for raceId, raceYear, raceRound, circutId, raceName, raceDate, raceTime, raceUrl, fp1_date, fp1_time, fp2_date, fp2_time, fp3_date, fp3_time, quali_date, quali_time, sprint_date, sprint_time in cursor:
+                races.append(Race(raceId, raceYear, raceRound, circutId, raceName, raceDate, raceTime, raceUrl, fp1_date, fp1_time, fp2_date, fp2_time, fp3_date, fp3_time, quali_date, quali_time, sprint_date, sprint_time))
+        return races
+
+    def update_race(self, raceId, attrNames, attrValues): # Update
+        if "raceId" in attrNames:
+            print("Primary key cannot be updated.") # !!! Display message on screen later.
+            return
+        if (len(attrNames) != len(attrValues)) or not len(attrNames):
+            print("Invalid input. ") # !!! Display message on screen later.
+            return
+
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE RACES SET "
+            for i in range(len(attrNames)):
+                query += (f""" {attrNames[i]} = "{attrValues[i]}",""" if isinstance(attrValues[i], str) else f" {attrNames[i]} = {attrValues[i]},") if attrValues[i] != "" else ""
+            query = query[:-1] + "WHERE (raceId = ?)"
+            if query != "UPDATE RACES SET WHERE (raceId = ?)":
+                cursor.execute(query, (raceId,))
+
+    def remove_race(self, raceId): # Delete
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM RACES WHERE (raceId = ?)"
+            cursor.execute(query, (raceId,))
+            connection.commit()
+# ============== RACES END ============== #
+
+
+# ============== QUALIFYING START ============== #
+    def add_qualifying(self, qualifying: Qualifying): # Create
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO QUALIFYING (qualifyId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            cursor.execute(
+                query,
+                (
+                    qualifying.qualifyId,
+                    qualifying.raceId,
+                    qualifying.driverId,
+                    qualifying.constructorId,
+                    qualifying.carNumber,
+                    qualifying.position,
+                    qualifying.q1,
+                    qualifying.q2,
+                    qualifying.q3
+                )
+            )
+            connection.commit()
+    
+    def get_qualifying(self): # Read
+        qualify = list()
+        with(sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM QUALIFYING"
+            cursor.execute(query)
+            connection.commit()
+            for qualifyId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3 in cursor:
+                qualify.append(Q(qualifyId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3))
+        return qualify
+
+    def update_qualifying(self, qualifyId, attrNames, attrValues): # Update
+        if "qualifyId" in attrNames:
+            print("Primary key cannot be updated.") # !!! Display message on screen later.
+            return
+        if (len(attrNames) != len(attrValues)) or not len(attrNames):
+            print("Invalid input. ") # !!! Display message on screen later.
+            return
+
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE QUALIFYING SET "
+            for i in range(len(attrNames)):
+                query += (f" {attrNames[i]} = {attrValues[i]},")
+            query = query[:-1] + "WHERE qualifyId = %s"
+            cursor.execute(query, qualifyId)
+
+    def remove_qualifying(self, qualifyId): # Delete
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM QUALIFYING WHERE (qualifyId = %s)"
+            cursor.execute(query, qualifyId)
+            connection.commit()
+# ============== QUALIFYING END ============== #
 
 # ============== Sprint Results START ============== #
+
     def addSprintResults(self, spRes: SprintResults):
+
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
             query = "INSERT INTO SPRINT_RESULTS (raceId, driverId, constructorId, sp_number,grid,position,positionText,positionOrder,points,laps,sp_time,milliseconds,fastestLap,fastestLapTime,statusId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
@@ -162,4 +471,6 @@ class Database:
             query = "DELETE FROM SPRINT_RESULTS WHERE (sprintResultId = %s)"
             cursor.execute(query, sprintResultId)
             connection.commit()
+
 # ============== Sprint Results END ============== #
+

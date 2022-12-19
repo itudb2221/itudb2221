@@ -1,0 +1,49 @@
+<!-- Rojen Arda Şeşen -->
+{% extends "layout.html" %}
+{% block title %} Driver Standings {%endblock%}
+{%block content%}
+<div class="container mt-3 bg-dark">
+    <form action="" method="post" name="add_driver_standing">
+        <p class="display-5 text-white">Add Driver Standing </p>
+        <div class="field">
+            <label for="raceId" class="label">raceId</label>
+            <div class="control">
+                <input type="number" name="raceId" class="input" required/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="driverId" class="label">driverId</label>
+            <div class="control">
+                <input type="number" name="driverId" class="input" required/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="points" class="label">points</label>
+            <div class="control">
+                <input type="number" name="points" class="input" required/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="position" class="label">position</label>
+            <div class="control">
+                <input type="number" name="position" class="input" required/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="positionText" class="label">positionText</label>
+            <div class="control">
+                <input type="text" name="positionText" class="input" required/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="wins" class="label">wins</label>
+            <div class="control">
+                <input type="number" name="wins" class="input" required/>
+            </div>
+        </div>
+        <div class="control text-end">
+            <button class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>
+{%endblock%}

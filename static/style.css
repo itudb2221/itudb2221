@@ -36,3 +36,17 @@ body {
 .nav-item:hover {
     background-color: #323539;
 }
+
+
+.btn-primary{
+    --bs-btn-color:#fff;
+    --bs-btn-bg:#323539;
+    --bs-btn-border-color:#fff;
+    --bs-btn-hover-color:#fff;
+    --bs-btn-hover-bg:#4a5860;
+    --bs-btn-hover-border-color:#fff;
+}
+
+.label {
+    color: #fff;
+}
