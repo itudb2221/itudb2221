@@ -35,6 +35,27 @@ class Season:
         self.seasonYear = seasonYear
         self.seasonUrl  = seasonUrl
 
+class Race:
+    def __init__(self, raceId, raceYear, raceRound, circutId, raceName, raceDate, raceTime, raceUrl, fp1_date, fp1_time, fp2_date, fp2_time, fp3_date, fp3_time, quali_date, quali_time, sprint_date, sprint_time):
+        self.raceId      = raceId
+        self.raceYear    = raceYear
+        self.raceRound   = raceRound
+        self.circutId    = circutId
+        self.raceName    = raceName
+        self.raceDate    = raceDate
+        self.raceTime    = raceTime
+        self.raceUrl     = raceUrl
+        self.fp1_date    = fp1_date
+        self.fp1_time    = fp1_time
+        self.fp2_date    = fp2_date
+        self.fp2_time    = fp2_time
+        self.fp3_date    = fp3_date
+        self.fp3_time    = fp3_time
+        self.quali_date  = quali_date
+        self.quali_time  = quali_time
+        self.sprint_date = sprint_date
+        self.sprint_time = sprint_time
+
 class DriverStanding:
     def __init__(self, driverStandingsId, raceId, driverId, points, position, positionText, wins):
         self.driverStandingsId  = driverStandingsId
@@ -75,24 +96,3 @@ class Qualifying:
         self.q1             = q1
         self.q2             = q2
         self.q3             = q3
-
-class Races:
-    def __init__(self, raceId, year, round, circuitId, name, date, time, url, fp1_date, fp1_time, fp2_date, fp2_time, fp3_date, fp3_time, quali_date, quali_time, sprint_date, sprint_time) -> None:
-        self.raceId         = raceId
-        self.year           = year
-        self.round          = round
-        self.circuitId      = circuitId
-        self.name           = name
-        self.date           = date
-        self.time           = time
-        self.url            = url
-        self.fp1_date       = fp1_date
-        self.fp1_time       = fp1_time
-        self.fp2_date       = fp2_date
-        self.fp2_time       = fp2_time   
-        self.fp3_date       = fp3_date
-        self.fp3_time       = fp3_time
-        self.quali_date     = quali_date
-        self.quali_time     = quali_time
-        self.sprint_date    = sprint_date
-        self.sprint_time    = sprint_time
