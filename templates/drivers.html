@@ -1,0 +1,38 @@
+<!-- Rojen Arda Şeşen -->
+{% extends "layout.html" %}
+{% block title %} Drivers {%endblock%}
+{%block content%}
+<div class="container-fluid mt-3 bg-dark">
+    <p class="display-4 text-white">Drivers</p>
+    <table class="table table-dark table-hover">
+        <thead>
+            <th></th>
+            <th></th>
+            <th>Number</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Date of Birth</th>
+            <th>Nationailty</th>
+        </thead>
+        <tbody>
+            {% for driver in drivers %}
+            <tr>
+                <td>
+                    <label class="checkbox">
+                        <input type="checkbox" name="driver_id" value="{{driver.driverId}}">
+                    </label>
+                </td>
+                <td>{{driver.driverId}}</td>
+                <td>{{driver.number}}</td>
+                <td>{{driver.code}}</td>
+                <td>{{driver.forename}}</td>
+                <td>{{driver.surname}}</td>
+                <td>{{driver.dob}}</td>
+                <td>{{driver.nationality}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{%endblock%}

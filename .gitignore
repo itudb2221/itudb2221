@@ -1,0 +1,12 @@
+# Cache
+/__pycache__
+
+# Virtual Environment
+/venv
+
+# CSV Files
+/f1
+
+questions.txt
+fill_database.py
+imdb.sql
