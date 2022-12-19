@@ -1,0 +1,67 @@
+<!-- Rojen Arda Şeşen -->
+{% extends "layout.html" %}
+{% block title %} Drivers {%endblock%}
+{%block content%}
+<div class="container mt-3 bg-dark">
+    <form action="" method="post" name="update_driver">
+        <p class="display-5 text-white">Update Driver</p>
+        <div class="field">
+            <label for="driverId" class="label">Driver ID</label>
+            <div class="control">
+                <input type="number" name="driverId" class="input" required/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="driverRef" class="label">Driver Reference</label>
+            <div class="control">
+                <input type="text" name="driverRef" class="input" />
+            </div>
+        </div>
+        <div class="field">
+            <label for="driverNumber" class="label">Driver Number</label>
+            <div class="control">
+            <input type="number" name="driverNumber" class="input"/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="code" class="label">code</label>
+            <div class="control">
+            <input type="text" name="code" class="input"/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="forename" class="label">forename</label>
+            <div class="control">
+            <input type="text" name="forename" class="input"/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="surname" class="label">surname</label>
+            <div class="control">
+            <input type="text" name="surname" class="input"/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="dob" class="label">dob</label>
+            <div class="control">
+            <input type="text" name="dob" class="input"  pattern="{4}-{2}-{2}"/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="nationality" class="label">nationality</label>
+            <div class="control">
+            <input type="text" name="nationality" class="input"/>
+            </div>
+        </div>
+        <div class="field">
+            <label for="driverUrl" class="label">driverUrl</label>
+            <div class="control">
+            <input type="number" name="driverUrl" class="input"/>
+            </div>
+        </div>
+        <div class="control text-end">
+            <button class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>
+{%endblock%}
