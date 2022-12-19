@@ -1,0 +1,115 @@
+<!-- Rojen Arda Şeşen -->
+{% extends "layout.html" %}
+{% block title %} Races {%endblock%}
+{%block content%}
+<div class="container mt-3 bg-dark">
+    <form action="" method="post" name="add_race">
+        <p class="display-5 text-white">Add Race </p>
+        <div class="field">
+            <label for="raceYear" class="label">raceYear</label>
+            <div class="control">
+                <input type="raceYear" name="raceYear" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="raceRound" class="label">raceRound</label>
+            <div class="control">
+                <input type="raceRound" name="raceRound" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="circutId" class="label">circutId</label>
+            <div class="control">
+                <input type="circutId" name="circutId" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="raceName" class="label">raceName</label>
+            <div class="control">
+                <input type="raceName" name="raceName" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="raceDate" class="label">raceDate</label>
+            <div class="control">
+                <input type="raceDate" name="raceDate" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="raceTime" class="label">raceTime</label>
+            <div class="control">
+                <input type="raceTime" name="raceTime" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="raceUrl" class="label">raceUrl</label>
+            <div class="control">
+                <input type="raceUrl" name="raceUrl" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="fp1_date" class="label">fp1_date</label>
+            <div class="control">
+                <input type="fp1_date" name="fp1_date" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="fp1_time" class="label">fp1_time</label>
+            <div class="control">
+                <input type="fp1_time" name="fp1_time" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="fp2_date" class="label">fp2_date</label>
+            <div class="control">
+                <input type="fp2_date" name="fp2_date" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="fp2_time" class="label">fp2_time</label>
+            <div class="control">
+                <input type="fp2_time" name="fp2_time" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="fp3_date" class="label">fp3_date</label>
+            <div class="control">
+                <input type="fp3_date" name="fp3_date" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="fp3_time" class="label">fp3_time</label>
+            <div class="control">
+                <input type="fp3_time" name="fp3_time" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="quali_date" class="label">quali_date</label>
+            <div class="control">
+                <input type="quali_date" name="quali_date" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="quali_time" class="label">quali_time</label>
+            <div class="control">
+                <input type="quali_time" name="quali_time" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="sprint_date" class="label">sprint_date</label>
+            <div class="control">
+                <input type="sprint_date" name="sprint_date" class="input" required />
+            </div>
+        </div>
+        <div class="field">
+            <label for="sprint_time" class="label">sprint_time</label>
+            <div class="control">
+                <input type="sprint_time" name="sprint_time" class="input" required />
+            </div>
+        </div>
+        <div class="control text-end">
+            <button class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>
+{%endblock%}
