@@ -63,4 +63,3 @@ class sprintResults:
         self.fastestLap = fastestLap
         self.fastestLapTime = fastestLapTime
         self.statusId = statusId
-    
