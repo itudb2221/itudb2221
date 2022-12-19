@@ -435,7 +435,7 @@ class Database:
             )
             connection.commit()
 
-     def getSprintResults(self): 
+    def getSprintResults(self): 
         sprint_results = list()
         with(sqlite.connect(self.dbfile)) as connection:
             cursor = connection.cursor()
@@ -446,7 +446,7 @@ class Database:
                 sprint_results.append(sprintResults(printResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
         return sprint_results
 
-     def updateSprintResults(self, sprintResultId, attrNames, attrValues):
+    def updateSprintResults(self, sprintResultId, attrNames, attrValues):
         if "sprintResultId" in attrNames:
             print("Primary key cannot be updated.") 
             return
