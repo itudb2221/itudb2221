@@ -1,0 +1,10 @@
+# Rojen Arda Şeşen
+
+- 09.11.2022: Created initial python files, created an initial layout for html documents and organized overall structure.
+- 22.11.2022: Added database models, wrote SQL code to create first few tables.
+- 26.11.2022: Added database methods, created database, updated view functions, updated layout, displayed items from database.
+- 13.12.2022: Added database methods, wrote SQL statements to create tables (for tables CIRCUITS, CONSTRUCTOR_RESULTS, CONSTRUCTOR_STANDINGS, CONSTRUCTORS, DRIVER_STANDINGS, DRIVERS, LAP_TIMES, PIT_STOPS, QUALIFYING, RACES, RESULTS, SEASONS, SPRINT_RESULTS). Added the tables to the database.
+
+# Ataberk Gürel
+
+- 19.12.2022: Restructured the project.

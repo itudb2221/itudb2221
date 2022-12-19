@@ -1,0 +1,50 @@
+<!-- Ataberk Gürel -->
+{% extends "layout.html" %}
+{% block title %} Pit Stops {%endblock%}
+{%block content%}
+<div class="container-fluid mt-3 bg-dark">
+    <p class="display-4 text-white">Pit Stops</p>
+    <form action="/pit_stops/add" method="post">
+        <h4 class="text-white">Add new pit stop</h4>
+        <input name="raceId" type="number" placeholder="Race Id">
+        <input name="driverId" type="number" placeholder="Driver Id">
+        <input name="stop" type="number" placeholder="Stop">
+        <input name="lap" type="number" placeholder="Lap">
+        <input name="time" type="time" placeholder="Time">
+        <input name="duration" type="number" step="0.001" placeholder="Duration">
+        <input name="milliseconds" type="number" placeholder="Milliseconds">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <table class="table table-dark table-hover">
+        <thead>
+            <th>Race Id</th>
+            <th>Driver Id</th>
+            <th>Stop</th>
+            <th>Lap</th>
+            <th>Time</th>
+            <th>Duration</th>
+            <th>Milliseconds</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            {% for pit_stop in pit_stops %}
+            <tr>
+                <td>{{pit_stop.raceId}}</td>
+                <td>{{pit_stop.driverId}}</td>
+                <td>{{pit_stop.stop}}</td>
+                <td>{{pit_stop.lap}}</td>
+                <td>{{pit_stop.time}}</td>
+                <td>{{pit_stop.duration}}</td>
+                <td>{{pit_stop.milliseconds}}</td>
+                <td>
+                    <a href="{{'/pit_stops/update/' + pit_stop.raceId|string + '-' + pit_stop.driverId|string + '-' + pit_stop.time|string}}" type="button" class="btn btn-primary">Edit</a>
+                    <form action="{{'/pit_stops/delete/' + pit_stop.raceId|string + '-' + pit_stop.driverId|string + '-' + pit_stop.time|string}}" method="post">
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{%endblock%}

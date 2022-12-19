@@ -265,6 +265,43 @@ def add_race_page():
         finally:
             return redirect(url_for("races_page"))
 
+def pit_stops():
+    db = current_app.config["db"]
+    pit_stops = db.getPitStops()
+
+    return render_template("pit_stops.html", pit_stops=pit_stops)
+
+def add_pit_stop():
+    db = current_app.config["db"]
+
+    if (request.method == "POST"):
+        db.addPitStop(request.form["raceId"], request.form["driverId"], request.form["stop"], 
+                    request.form["lap"], request.form["time"], request.form["duration"], request.form["milliseconds"])
+
+        return pit_stops() 
+
+def delete_pit_stop(identifier):
+    db = current_app.config["db"]
+    raceId, driverId, time = identifier.split('-')
+    db.deletePitStop(raceId, driverId, time)
+
+    return pit_stops()
+
+def update_pit_stop(identifier):
+    db = current_app.config["db"]
+    
+    raceId, driverId, time = identifier.split('-')
+
+    if (request.method == "POST"):
+        db.updatePitStop(raceId, driverId, time, request.form["raceId"], request.form["driverId"], request.form["stop"], 
+                        request.form["lap"], request.form["time"], request.form["duration"], request.form["milliseconds"])
+
+        return pit_stops() 
+    
+    if (request.method == "GET"):
+        pitstop = db.getPitStopByRaceIdAndDriverIdAndTime(raceId, driverId, time)
+
+        return render_template("update_pitstop.html", pitstop=pitstop)
 # ============ LAP TIMES ============ #
 
 def lap_times_page():

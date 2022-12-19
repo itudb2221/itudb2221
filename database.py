@@ -4,7 +4,9 @@ import sqlite3 as sqlite
 class Database:
     def __init__(self, dbfile):
         self.dbfile = dbfile
+
 # ============== Drivers Start =============== #
+
     def add_driver(self, driver: Driver): # Create
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
@@ -58,6 +60,16 @@ class Database:
             query = "DELETE FROM DRIVERS WHERE (driverId = ?)"
             cursor.execute(query, (driverId,))
             connection.commit()
+
+    def get_driver_by_id(self, driverId):
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM DRIVERS WHERE driverId = ? LIMIT 1"
+            cursor.execute(query, (driverId,))
+            connection.commit()
+            
+            for driverId, driverRef, driverNumber, code, forename, surname, dob, nationality, driverUrl in cursor:
+                return Driver(driverId, driverRef, driverNumber, code, forename, surname, dob, nationality, driverUrl)
 
 # ============== Drivers End =============== #
 
@@ -382,7 +394,7 @@ class Database:
             cursor.execute(query)
             connection.commit()
             for qualifyId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3 in cursor:
-                qualify.append(Q(qualifyId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3))
+                qualify.append(Qualifying(qualifyId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3))
         return qualify
 
     def update_qualifying(self, qualifyId, attrNames, attrValues): # Update
@@ -446,7 +458,7 @@ class Database:
             cursor.execute(query)
             connection.commit()
             for sprintResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId in cursor:
-                sprint_results.append(SprintResults(printResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
+                sprint_results.append(SprintResults(sprintResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
         return sprint_results
 
     def updateSprintResults(self, sprintResultId, attrNames, attrValues):
@@ -536,3 +548,75 @@ class Database:
             connection.commit()
 
 # ============== Lap Times END ============== #
+
+
+# ============== CONSTRUCTORS START ============== #
+    def addConstructors(self, cst: Constructor):
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO CONSTRUCTORS (constructorId, constructorRef, constructorName, nationality, constructorUrl) VALUES (?, ?, ?, ?, ?)"
+            cursor.execute(
+                query,
+                (
+                    cst.constructorId,
+                    cst.constructorRef,
+                    cst.name,
+                    cst.nationality,
+                    cst.url
+                )
+            )
+            connection.commit()
+# ============== CONSTRUCTORS END ============== #
+
+# ============== PIT STOPS START ============== #
+
+    def addPitStop(self, raceId, driverId, stop, lap, time, duration, milliseconds):
+
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO PIT_STOPS (raceId, driverId, stop, lap, time, duration, milliseconds) VALUES (?, ?, ?, ?, ?, ?, ?)"
+            cursor.execute(query, (raceId, driverId, stop, lap, time, duration, milliseconds))
+            connection.commit()
+
+    def getPitStops(self):
+        pit_stops = []
+
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM PIT_STOPS ORDER BY raceId, time LIMIT 100"
+            cursor.execute(query)
+            connection.commit()
+            
+            for raceId, driverId, stop, lap, time, duration, milliseconds in cursor:
+                pit_stops.append(PitStop(raceId, driverId, stop, lap, time, duration, milliseconds))
+
+        return pit_stops
+
+    def deletePitStop(self, raceId, driverId, time):
+        with sqlite.connect(self.dbfile) as connection:
+            print(raceId, driverId, time)
+            cursor = connection.cursor()
+            query = "DELETE FROM PIT_STOPS WHERE raceId = ? AND driverId = ? and time = ?"
+            cursor.execute(query, (raceId, driverId, time,))
+            connection.commit()
+
+    def updatePitStop(self, raceId, driverId, time, updatedRaceId, updatedDriverId, updatedStop, updatedLap, updatedTime, updatedDuration, updatedMilliseconds):
+        with sqlite.connect(self.dbfile) as connection:
+            print(raceId, driverId, time)
+            cursor = connection.cursor()
+            query = "UPDATE PIT_STOPS SET raceId = ?, driverId=?, stop=?, lap=?, time=?, duration=?, milliseconds=? WHERE raceId=? AND driverId=? and time=?"
+            cursor.execute(query, (updatedRaceId, updatedDriverId, updatedStop, updatedLap, updatedTime, updatedDuration, updatedMilliseconds, raceId, driverId, time))
+            connection.commit()
+
+    def getPitStopByRaceIdAndDriverIdAndTime(self, raceId, driverId, time):
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM PIT_STOPS WHERE raceId = ? AND driverId = ? AND time = ? LIMIT 1"
+            cursor.execute(query, (raceId, driverId, time,))
+            connection.commit()
+            
+            for raceId, driverId, stop, lap, time, duration, milliseconds in cursor:
+                return PitStop(raceId, driverId, stop, lap, time, duration, milliseconds)
+
+# ============== PIT STOPS END ============== #
+
