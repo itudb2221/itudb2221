@@ -18,3 +18,8 @@ def driver_standings_page():
 
 def edit_tables_page():
     return render_template("edit_tables.html")
+
+def sprint_results_page():
+    db = current_app.config["db"]
+    spRes = db.getSprintResults()
+    return render_template("sprint_results.html",spRes = spRes, methods=["GET", "POST"])
