@@ -1,10 +1,18 @@
-from models import *
+from models.Driver import Driver 
+from models.DriverStanding import DriverStanding
+from models.Circuit import Circuit
+from models.Constructor import Constructor
+from models.Race import Race
+from models.Season import Season
+from models.SprintResult import SprintResult
 import sqlite3 as sqlite
 
 class Database:
     def __init__(self, dbfile):
         self.dbfile = dbfile
+
 # ============== Drivers Start =============== #
+
     def add_driver(self, driver: Driver): # Create
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
@@ -237,31 +245,31 @@ class Database:
 
 # ============== RACES START ============== #
 
-    def addRaces(self, races: Races):
+    def addRaces(self, race: Race):
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
             query = "INSERT INTO RACES (raceId, raceYear, raceRound, circuitId, raceName, raceDate, raceTime, raceUrl, fp1_date, fp1_time, fp2_date, fp2_time, fp3_date, fp3_time, quali_date, quali_time, sprint_date, sprint_time ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             cursor.execute(
                 query,
                 (
-                    races.raceId,
-                    races.year,
-                    races.round,
-                    races.circuitId,
-                    races.name,
-                    races.date,
-                    races.time,
-                    races.url,
-                    races.fp1_date,
-                    races.fp1_time,
-                    races.fp2_date,
-                    races.fp2_time,
-                    races.fp3_date,
-                    races.fp3_time,
-                    races.quali_date,
-                    races.quali_time,
-                    races.sprint_date,
-                    races.sprint_time
+                    race.raceId,
+                    race.year,
+                    race.round,
+                    race.circuitId,
+                    race.name,
+                    race.date,
+                    race.time,
+                    race.url,
+                    race.fp1_date,
+                    race.fp1_time,
+                    race.fp2_date,
+                    race.fp2_time,
+                    race.fp3_date,
+                    race.fp3_time,
+                    race.quali_date,
+                    race.quali_time,
+                    race.sprint_date,
+                    race.sprint_time
                 )
             )
             connection.commit()
@@ -269,7 +277,7 @@ class Database:
 # ============== RACES END ============== #
 
 # ============== Sprint Results START ============== #
-     def addSprintResults(self, spRes: sprintResults):
+    def addSprintResults(self, spRes: SprintResult):
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
             query = "INSERT INTO SPRINT_RESULTS (raceId, driverId, constructorId, sp_number,grid,position,positionText,positionOrder,points,laps,sp_time,milliseconds,fastestLap,fastestLapTime,statusId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
@@ -295,7 +303,7 @@ class Database:
             )
             connection.commit()
 
-     def getSprintResults(self): 
+    def getSprintResults(self): 
         sprint_results = list()
         with(sqlite.connect(self.dbfile)) as connection:
             cursor = connection.cursor()
@@ -303,10 +311,10 @@ class Database:
             cursor.execute(query)
             connection.commit()
             for sprintResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId in cursor:
-                sprint_results.append(sprintResults(printResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
+                sprint_results.append(SprintResult(sprintResultId, raceId, driverId, constructorId, sp_number, grid, position, positionText, positionOrder, points,laps, sp_time, milliseconds, fastestLap, fastestLapTime, statusId))
         return sprint_results
 
-     def updateSprintResults(self, sprintResultId, attrNames, attrValues):
+    def updateSprintResults(self, sprintResultId, attrNames, attrValues):
         if "sprintResultId" in attrNames:
             print("Primary key cannot be updated.") 
             return
@@ -331,7 +339,7 @@ class Database:
 # ============== Sprint Results END ============== #
 
 # ============== CONSTRUCTORS START ============== #
-    def addConstructors(self, cst: Constructors):
+    def addConstructors(self, cst: Constructor):
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
             query = "INSERT INTO CONSTRUCTORS (constructorId, constructorRef, constructorName, nationality, constructorUrl) VALUES (?, ?, ?, ?, ?)"
