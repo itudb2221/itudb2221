@@ -66,4 +66,33 @@ class DriverStanding:
         self.positionText       = positionText
         self.wins               = wins
 
+class sprintResults:
+    def __init__(self, sprintResultId ,raceId,driverId,constructorId,sp_number ,grid,position,positionText,positionOrder,points,laps,sp_time ,milliseconds,fastestLap,fastestLapTime,statusId):
+        self.sprintResultId  = sprintResultId 
+        self.raceId = raceId
+        self.driverId = driverId
+        self.constructorId = constructorId
+        self.sp_number  = sp_number 
+        self.grid = grid
+        self.position = position
+        self.positionText = positionText
+        self.positionOrder = positionOrder
+        self.points = points
+        self.laps = laps
+        self.sp_time  = sp_time 
+        self.milliseconds = milliseconds
+        self.fastestLap = fastestLap
+        self.fastestLapTime = fastestLapTime
+        self.statusId = statusId
 
+class Qualifying:
+    def __init__(self, qualifyingId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3) -> None:
+        self.qualifyingId   = qualifyingId
+        self.raceId         = raceId
+        self.driverId       = driverId
+        self.constructorId  = constructorId
+        self.carNumber      = carNumber
+        self.position       = position
+        self.q1             = q1
+        self.q2             = q2
+        self.q3             = q3
