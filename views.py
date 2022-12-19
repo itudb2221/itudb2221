@@ -265,3 +265,55 @@ def add_race_page():
         finally:
             return redirect(url_for("races_page"))
 
+# ============ LAP TIMES ============ #
+
+def lap_times_page():
+    db = current_app.config["db"]
+    if request.method == "GET":
+        lap_times = db.get_lap_times()
+        return render_template("lap_times.html", lap_times=lap_times)
+    else:
+        lap_keys = request.form.getlist("lap_key")
+        for lap_key in lap_keys:
+            db.remove_lap_time(lap_key)
+        return redirect(url_for("lap_times_page"))
+
+def update_lap_time_page():
+    db = current_app.config["db"]
+    if request.method == "GET":
+        return render_template("update_lap_time.html")
+    else:
+        raceId = request.form['raceId']
+        driverId = request.form['driverId']
+        lap = request.form['lap']
+        attr_names = list()
+        attr_values = list()
+        if "position" in request.form:
+            attr_names.append("position")
+            attr_values.append(request.form["position"])
+        if "lapTime" in request.form:
+            attr_names.append("lapTime")
+            attr_values.append(request.form["lapTime"])
+        if "milliseconds" in request.form:
+            attr_names.append("milliseconds")
+            attr_values.append(request.form["milliseconds"])
+        db.update_lap_time(raceId, driverId, lap, attr_names, attr_values)
+        return redirect(url_for("lap_times_page"))
+
+def add_lap_time_page():
+    db = current_app.config["db"]
+    if request.method == "GET":
+        return render_template("add_lap_time.html")
+    else:
+        try:
+            raceId = request.form["raceId"]
+            driverId = request.form["driverId"]
+            lap = request.form["lap"]
+            position = request.form["position"]
+            lapTime = request.form["lapTime"]
+            milliseconds = request.form["milliseconds"]
+            db.add_lap_time(LapTime(raceId, driverId, lap, position, lapTime, milliseconds))
+        except:
+            print(traceback.format_exc())
+        finally:
+            return redirect(url_for("lap_times_page"))

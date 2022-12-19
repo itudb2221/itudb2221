@@ -21,7 +21,9 @@ def create_app():
     app.add_url_rule('/races', view_func=views.races_page, methods=["GET", "POST"])
     app.add_url_rule('/addRace', view_func=views.add_race_page, methods=["GET", "POST"])
     app.add_url_rule('/updateRace', view_func=views.update_race_page, methods=["GET", "POST"])
-
+    app.add_url_rule('/lapTimes', view_func=views.lap_times_page, methods=["GET", "POST"])
+    app.add_url_rule('/updateLapTime', view_func=views.update_lap_time_page, methods=["GET", "POST"])
+    app.add_url_rule('/addLapTime', view_func=views.add_lap_time_page, methods=["GET", "POST"])
     return app
 
 app = create_app()
