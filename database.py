@@ -112,7 +112,7 @@ class Database:
 # ============== Constructors End ============== #
 
 # ============== Circuits Start ============== #
-    def add_circuit(self, circuit: Constructor): # Create
+    def add_circuit(self, circuit: Circuit): # Create
         with sqlite.connect(self.dbfile) as connection:
             cursor = connection.cursor()
             query = "INSERT INTO CIRCUITS (circuitRef, circuitName, circutitLocation, country, lat, lng, alt, circuitUrl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
@@ -267,6 +267,62 @@ class Database:
             connection.commit()
 # Add AUTOINCREMENT property manually.
 # ============== RACES END ============== #
+
+# ============== QUALIFYING START ============== #
+    def add_qualifying(self, qualifying: Qualifying): # Create
+        with sqlite.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO QUALIFYING (qualifyId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            cursor.execute(
+                query,
+                (
+                    qualifying.qualifyId,
+                    qualifying.raceId,
+                    qualifying.driverId,
+                    qualifying.constructorId,
+                    qualifying.carNumber,
+                    qualifying.position,
+                    qualifying.q1,
+                    qualifying.q2,
+                    qualifying.q3
+                )
+            )
+            connection.commit()
+    
+    def get_qualifying(self): # Read
+        qualify = list()
+        with(sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM QUALIFYING"
+            cursor.execute(query)
+            connection.commit()
+            for qualifyId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3 in cursor:
+                qualify.append(Q(qualifyId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3))
+        return qualify
+
+    def update_qualifying(self, qualifyId, attrNames, attrValues): # Update
+        if "qualifyId" in attrNames:
+            print("Primary key cannot be updated.") # !!! Display message on screen later.
+            return
+        if (len(attrNames) != len(attrValues)) or not len(attrNames):
+            print("Invalid input. ") # !!! Display message on screen later.
+            return
+
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE QUALIFYING SET "
+            for i in range(len(attrNames)):
+                query += (f" {attrNames[i]} = {attrValues[i]},")
+            query = query[:-1] + "WHERE qualifyId = %s"
+            cursor.execute(query, qualifyId)
+
+    def remove_qualifying(self, qualifyId): # Delete
+        with (sqlite.connect(self.dbfile)) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM QUALIFYING WHERE (qualifyId = %s)"
+            cursor.execute(query, qualifyId)
+            connection.commit()
+# ============== QUALIFYING END ============== #
 
 # ============== Sprint Results START ============== #
      def addSprintResults(self, spRes: sprintResults):

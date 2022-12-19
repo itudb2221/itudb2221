@@ -63,3 +63,36 @@ class sprintResults:
         self.fastestLap = fastestLap
         self.fastestLapTime = fastestLapTime
         self.statusId = statusId
+
+class Qualifying:
+    def __init__(self, qualifyingId, raceId, driverId, constructorId, carNumber, position, q1, q2, q3) -> None:
+        self.qualifyingId   = qualifyingId
+        self.raceId         = raceId
+        self.driverId       = driverId
+        self.constructorId  = constructorId
+        self.carNumber      = carNumber
+        self.position       = position
+        self.q1             = q1
+        self.q2             = q2
+        self.q3             = q3
+
+class Races:
+    def __init__(self, raceId, year, round, circuitId, name, date, time, url, fp1_date, fp1_time, fp2_date, fp2_time, fp3_date, fp3_time, quali_date, quali_time, sprint_date, sprint_time) -> None:
+        self.raceId         = raceId
+        self.year           = year
+        self.round          = round
+        self.circuitId      = circuitId
+        self.name           = name
+        self.date           = date
+        self.time           = time
+        self.url            = url
+        self.fp1_date       = fp1_date
+        self.fp1_time       = fp1_time
+        self.fp2_date       = fp2_date
+        self.fp2_time       = fp2_time   
+        self.fp3_date       = fp3_date
+        self.fp3_time       = fp3_time
+        self.quali_date     = quali_date
+        self.quali_time     = quali_time
+        self.sprint_date    = sprint_date
+        self.sprint_time    = sprint_time
